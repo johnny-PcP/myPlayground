@@ -13,13 +13,17 @@
 
 ::: tip
 
-本站使用 VitePress 構建，原始碼至[GitHub](fooBar/your-repo-link)。
+本站使用 VitePress 構建，原始碼至[GitHub](https://github.com/johnny-PcP/myPlayground.git)。
 
 :::
 
-## About Me- [LinkedIn](www.linkedin.com/in/johnny-chen-51b61427a)
+## About Me
 
-INFJ-A, 兩隻貓, 吃貨。
+INFJ-A, 貓, 吃貨
+
+[LinkedIn](https://www.linkedin.com/in/johnny-chen-51b61427a)
+
+<!-- ![johnny](https://github-readme-stats.vercel.app/api/top-langs/?username=johnny-PcP&layout=compact&theme=radical&hide=html,css,scss,less) -->
 
 ::: details 技術堆疊
 

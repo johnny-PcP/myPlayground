@@ -3,7 +3,7 @@
 layout: home
 
 hero:
-  name: "My Playground"
+  name: "Vue.js 私人元件庫"
   text: "練習、探索、實踐"
   tagline: Building Ideas with Vue.js
   actions:
@@ -11,14 +11,14 @@ hero:
       text: 關於本站
       link: /about
     - theme: alt
-      text: 快速清單
-      link: /components/
+      text: 元件列表
+      link: /components
 
 features:
   - title: 原始碼
     details: 本專案的原始碼已開源，歡迎在 GitHub 上查看並參與貢獻。
     icon: "🌐"
-    link: https://github.com/your-repo-link
+    link: https://github.com/johnny-PcP/myPlayground
   - title: 學習之道
     details: 重現他人元件，並分析可以學習的地方。
     icon: "📖"
