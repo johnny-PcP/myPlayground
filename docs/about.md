@@ -1,19 +1,49 @@
-# 關於本站
+<script setup>
+import { VPTeamMembers } from 'vitepress/theme'
 
-每次看過的文章或做過的功能，往往只有在當下最熟悉，但過了一段時間很容易忘記語法，只記得大概的觀念。所以希望藉由這個網站能記錄自己曾經走過的坑。
+const members = [
+  {
+    avatar: 'https://chillcomponent.codlin.me/og.jpg',
+    name: 'Codfish',
+    title: '@codfish2140',
+    links: [
+       { icon: 'gitlab', link: 'https://gitlab.com/side_project/chill-component' },
+      { icon: 'threads', link: 'https://www.threads.com/@codfish2140' },
+      { icon: 'youtube', link: 'https://www.youtube.com/@codfish2140' },
+    ]
+  }]
+</script>
 
-## 網站分區：
+# 關於這個網站
 
-1. **學習之道**: 重現他人元件，並分析可以學習的地方。
-2. **靈感實踐**: 重構並優化自己的做過的元件，或將想法變為現實。
+每次看過的文章或做過的功能，往往只有在當下最熟悉，但是過了段時間後就很容易忘記一些語法細節，只記得大概的觀念，所以希望藉由這個網站幫助自己在需要時能快速回憶。
 
-## 你可以如何使用這網站
+感謝
+<VPTeamMembers size="small" :members />
 
-我會盡量將本站的各式組件，設計成能夠拷貝即用，如果有任何問題或建議，歡迎以 [e-mail](mailto:johnnypcp0313@gmail.com) 聯繫我。
+<VPTeam />
+
+## 如何使用本站 ?
+
+### <span style="color: #ff5722;">對你來說：拷貝即用</span>
+
+本站會盡量將各式組件，設計成能夠拷貝即用，您可直接閱覽[元件列表](./components/)來尋找需要的元件。
+::: tip
+
+您也可以嘗試在上方搜尋框輸入關鍵字搜索。
+
+:::
+
+### <span style="color: #4caf50;">對我來說： 目的分類</span>
+
+根據學習目的不同，本站的組件區分：
+
+- **學習之道**: 重現他人元件，並分析可以學習的地方。
+- **靈感實踐**: 重構並優化自己的做過的元件，或將一些想法予以實踐。
 
 ::: tip
 
-本站使用 VitePress 構建，原始碼至[GitHub](https://github.com/johnny-PcP/myPlayground.git)。
+每個組件詳細頁面的後半部將紀錄我對該組件的構建心得（類似筆記）。
 
 :::
 
@@ -21,19 +51,26 @@
 
 INFJ-A, 貓, 吃貨
 
-[LinkedIn](https://www.linkedin.com/in/johnny-chen-51b61427a)
+<!-- [LinkedIn](https://www.linkedin.com/in/johnny-chen-51b61427a) -->
+
+![img](cat-icon.png)
 
 <!-- ![johnny](https://github-readme-stats.vercel.app/api/top-langs/?username=johnny-PcP&layout=compact&theme=radical&hide=html,css,scss,less) -->
 
-::: details 技術堆疊
+::: details 技能樹
 
 - **前端框架**: Vue.js
 - **渲染框架**: Nuxt.js(SSR), Astro(SSG)
-- **狀態管理工具**: Pinia, VueX
 - **後端框架**: Laravel, Nova
-- **API 技術**: GraphQL (GQL)
+- **API**: GraphQL (GQL)
 - **版型與樣式**: Tailwind CSS, Bootstrap
-- **容器化技術**: Docker
+- **容器**: Docker
 - **自動化部署**: GitHub Actions
+
+:::
+::: info
+
+- 本站使用 VitePress 構建，原始碼位於[GitHub](https://github.com/johnny-PcP/myPlayground.git)。
+- 有任何問題或建議，歡迎以 [e-mail](mailto:johnnypcp0313@gmail.com) 聯繫我。
 
 :::

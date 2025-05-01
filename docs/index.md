@@ -6,6 +6,10 @@ hero:
   name: "Vue.js 私人元件庫"
   text: "練習、探索、實踐"
   tagline: Building Ideas with Vue.js
+  image:
+    src: "/cat.jpg"
+    alt: "Hero Image"
+    class: "custom-hero-image"
   actions:
     - theme: brand
       text: 關於本站
