@@ -3,7 +3,7 @@ import { VPTeamMembers } from 'vitepress/theme'
 
 const members = [
   {
-    avatar: 'https://chillcomponent.codlin.me/og.jpg',
+    avatar: 'https://chillcomponent.codlin.me/logo.webp',
     name: 'Codfish',
     title: '@codfish2140',
     links: [
@@ -17,11 +17,6 @@ const members = [
 # 關於這個網站
 
 每次看過的文章或做過的功能，往往只有在當下最熟悉，但是過了段時間後就很容易忘記一些語法細節，只記得大概的觀念，所以希望藉由這個網站幫助自己在需要時能快速回憶。
-
-感謝
-<VPTeamMembers size="small" :members />
-
-<VPTeam />
 
 ## 如何使用本站 ?
 
@@ -47,15 +42,17 @@ const members = [
 
 :::
 
-## About Me
+## 特別感謝
+
+鱈魚大的[Chill Component](https://gitlab.com/side_project/chill-component)專案給予本站的設計非常多靈感，是一個本來想做的事竟然有人做出來，還遠超預期的存在。
+
+<VPTeamMembers size="small" :members />
+
+## About Me - [Linked-In](https://www.linkedin.com/in/johnny-chen-51b61427a)
 
 INFJ-A, 貓, 吃貨
 
-<!-- [LinkedIn](https://www.linkedin.com/in/johnny-chen-51b61427a) -->
-
 ![img](cat-icon.png)
-
-<!-- ![johnny](https://github-readme-stats.vercel.app/api/top-langs/?username=johnny-PcP&layout=compact&theme=radical&hide=html,css,scss,less) -->
 
 ::: details 技能樹
 
