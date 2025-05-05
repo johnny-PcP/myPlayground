@@ -40,7 +40,7 @@ export default defineConfig({
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
-      { text: "Home", link: "/" },
+      { text: "首頁", link: "/" },
       { text: "關於本站", link: "/about" },
       { text: "元件列表", link: "/components/" },
     ],
@@ -49,36 +49,21 @@ export default defineConfig({
         text: "導覽",
         items: [{ text: "關於本站", link: "/about" }],
       },
-
-      {
-        text: "學習之道",
-        items: [{ text: "調皮的按鈕", link: "/learning/btn-naughty/" }],
-      },
-      {
-        text: "靈感實踐",
-        items: [
-          {
-            text: "非精準搜尋Input",
-            link: "/inspiration/nested-fuzzy-search/",
-          },
-        ],
-      },
       {
         text: "元件列表",
         link: "/components/",
         items: [
           {
-            text: "按鈕",
-            items: [{ text: "調皮的按鈕", link: "/learning/btn-naughty/" }],
+            text: "文字輸入框",
+            items: [
+              { text: "非精準搜尋", link: "/inspiration/nested-fuzzy-search" },
+            ],
           },
         ],
       },
       {
-        text: "Examples",
-        items: [
-          { text: "Markdown Examples", link: "/markdown-examples" },
-          { text: "Runtime API Examples", link: "/api-examples" },
-        ],
+        text: "學習之道",
+        items: [{ text: "調皮的按鈕", link: "/learning/btn-naughty/" }],
       },
     ],
 

@@ -33,8 +33,8 @@ const members = [
 
 根據學習目的不同，本站的組件區分：
 
-- **學習之道**: 重現他人元件，並分析可以學習的地方。
 - **靈感實踐**: 重構並優化自己的做過的元件，或將一些想法予以實踐。
+- **學習之道**: 重現他人元件，並分析可以學習的地方。
 
 ::: tip
 
@@ -44,15 +44,20 @@ const members = [
 
 ## 特別感謝
 
-鱈魚大的[Chill Component](https://gitlab.com/side_project/chill-component)專案給予本站的設計非常多靈感，是一個本來想做的事竟然有人做出來，還遠超預期的存在。
+鱈魚大的[Chill Component](https://gitlab.com/side_project/chill-component)專案，給予本站非常多的靈感，對動畫元件有興趣的，非常推薦逛逛他[網站](https://chillcomponent.codlin.me/)。
 
 <VPTeamMembers size="small" :members />
 
 ## About Me - [Linked-In](https://www.linkedin.com/in/johnny-chen-51b61427a)
 
-INFJ-A, 貓, 吃貨
+<section class=" flex items-center gap-5">
+<img src="/cat-icon.png" alt="cat-icon" width="200" height="200" style="border-radius: 50%;"/>
+<div class="flex flex-col gap-2">
+  <p class="text-3xl font-bold">Johnny Chen</p>
+  <p class="self-end">INFJ, 貓, 吃貨</p>
 
-![img](cat-icon.png)
+</div>
+</section>
 
 ::: details 技能樹
 
