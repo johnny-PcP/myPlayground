@@ -10,7 +10,13 @@
     </div>
 
     <!-- 按鈕 -->
-    <div class="carrier" @click="run" ref="carrierRef" :style="carrierStyle">
+    <div
+      @click="handleTrigger"
+      @keydown.enter="handleTrigger"
+      class="carrier"
+      ref="carrierRef"
+      :style="carrierStyle"
+    >
       <slot v-bind="attrs">
         <button class="btn">我是按鈕</button>
       </slot>
@@ -19,8 +25,12 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, useAttrs, computed } from "vue";
-import { throttleFilter, useMouseInElement } from "@vueuse/core";
+import { reactive, ref, useAttrs, computed, watch } from "vue";
+import {
+  throttleFilter,
+  useMouseInElement,
+  useIntersectionObserver,
+} from "@vueuse/core";
 // #region CSSProperties
 import type { CSSProperties } from "vue";
 // #endregion CSSProperties
@@ -111,6 +121,19 @@ const carrierStyle = computed<CSSProperties>(() => {
 });
 // #endregion carrierStyle
 
+/** 計算向量長度 */
+function getVectorLength({
+  x,
+  y,
+  z = 0,
+}: {
+  x: number;
+  y: number;
+  z?: number;
+}) {
+  return Math.sqrt(x * x + y * y + z * z);
+}
+
 /** 計算單位向量 */
 // #region getUnitVector1
 function getUnitVector({ x, y, z = 0 }: { x: number; y: number; z?: number }) {
@@ -143,9 +166,55 @@ function run() {
   // 讓元素離開 focus 狀態
   carrierRef.value?.blur();
 
-  emit("run");
+  /** 判斷是否超出限制距離 */
+  const maxDistance = getVectorLength({
+    x: mouseInElement.elementWidth * Number(props.maxDistanceMultiple),
+    y: mouseInElement.elementHeight * Number(props.maxDistanceMultiple),
+  });
+  const distance = getVectorLength(carrierOffset.value);
+  const outOfRange = distance > maxDistance;
+
+  if (outOfRange) {
+    back();
+  } else {
+    emit("run");
+  }
 }
+
 // #endregion getUnitVector2
+
+function handleTrigger() {
+  emit("click");
+
+  if (!props.disabled) return;
+  run();
+}
+
+/** 滑鼠移動到按鈕上時 */
+watch(
+  () => mouseInElement.isOutside,
+  (value) => {
+    if (value || !props.disabled) return;
+    run();
+  }
+);
+
+/** 按鈕被遮擋時回歸原位 */
+useIntersectionObserver(carrierRef, (value) => {
+  console.log(value[0]?.isIntersecting);
+
+  if (value[0]?.isIntersecting) return;
+  back();
+});
+
+/** disabled 解除時，回歸原位 */
+watch(
+  () => props.disabled,
+  (value) => {
+    if (props.disabled) return;
+    back();
+  }
+);
 </script>
 
 <style scoped>
