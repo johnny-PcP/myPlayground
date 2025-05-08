@@ -47,7 +47,10 @@ export default defineConfig({
     sidebar: [
       {
         text: "導覽",
-        items: [{ text: "關於本站", link: "/about" }],
+        items: [
+          { text: "關於本站", link: "/about" },
+          { text: "安裝", link: "/install" },
+        ],
       },
       {
         text: "元件列表",
