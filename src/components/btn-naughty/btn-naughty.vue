@@ -72,9 +72,7 @@ const props = withDefaults(defineProps<Props>(), {
 // #region Emits
 const emit = defineEmits<{
   (e: "click"): void;
-  /** 開始移動時 */
   (e: "run"): void;
-  /** 開始返回時 */
   (e: "back"): void;
 }>();
 // #endregion Emits
