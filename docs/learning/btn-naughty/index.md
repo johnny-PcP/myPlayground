@@ -81,3 +81,14 @@ carrierOffset.value.y -= direction.y * mouseInElement.elementHeight;
 <<< ../../../src/components/btn-naughty/btn-naughty.vue/#Emits
 
 ## 單元測試
+
+詳細可以觀看測試原始碼；值得一提的是元件有 defineExpose 出 offset，這樣就可以在測試中取得元件的當前位置。
+
+```javascript{2}
+defineExpose({
+  offset: carrierOffset,
+});
+```
+
+::: details 查看測試原始碼
+<<< ../../../src/components/btn-naughty/btn-naughty.spec.ts

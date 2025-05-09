@@ -18,7 +18,7 @@
       :style="carrierStyle"
     >
       <slot v-bind="attrs">
-        <button class="btn">我是按鈕</button>
+        <button class="btn">{{ props.label }}</button>
       </slot>
     </div>
   </div>
@@ -62,7 +62,7 @@ interface Props {
 
 // #endregion Props
 const props = withDefaults(defineProps<Props>(), {
-  label: "",
+  label: "按鈕預設文字",
   disabled: false,
   zIndex: undefined,
   maxDistanceMultiple: 5,
@@ -213,6 +213,13 @@ watch(
     back();
   }
 );
+
+// #region defineExpose
+defineExpose({
+  /** 按鈕目前偏移量 */
+  offset: carrierOffset,
+});
+// #endregion defineExpose
 </script>
 
 <style scoped>
