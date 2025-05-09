@@ -5,7 +5,7 @@
       <span class="ml-2"> 停用按鈕 </span>
     </label>
     <div class="component-area">
-      <btn-naughty :disabled :maxDistanceMultiple="2" />
+      <BtnNaughty :disabled :maxDistanceMultiple="2" />
     </div>
   </div>
 </template>

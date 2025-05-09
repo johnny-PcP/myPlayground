@@ -2,18 +2,48 @@
 
 簡單介紹本站有使用到的套件，並提供安裝指令。
 
-## VueUse
+## 測試工具
 
-[VueUse](https://vueuse.org/) 是一個 Vue 3 的函式庫，提供了許多實用的組件和功能，讓開發者能夠更輕鬆地構建應用程式。
+### Vitest
 
-```bash
-npm i @vueuse/core
-```
+使用 [Vitest](https://vitest.dev/) 作為單元測試框架，並搭配 [Vue Test Utils](https://test-utils.vuejs.org/) 來測試 Vue 元件。
 
-## 單元測試
+:::details 安裝提示
 
-使用 [Vitest](https://vitest.dev/) 作為單元測試框架，並搭配 [Vue Test Utils](https://vuejs.org/docs/guide/scaling-up/testing-vue-components-with-vue-test-utils.html) 來測試 Vue 元件。
+執行以下指令安裝：
 
 ```bash
-npm i -D @vue/test-utils @vitest/ui
+npm install --save-dev @vue/test-utils @vitest/ui
 ```
+
+安裝後在 `package.json` 中加入：
+
+```json{3,4,5}
+{
+  "scripts": {
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage"
+  }
+}
+```
+
+然後在 `vitest.config.js` 中加入以下設定：
+
+```javascript{6,8,9,10}
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+// https://vitejs.dev/config/
+export default defineConfig(({ command, mode }) => {
+  return {
+    plugins: [vue()],
+    test: {
+      globals: true,
+      environment: "happy-dom",
+      reporter: ["default"], // 需求可再加入html以產生報告
+    },
+  };
+});
+```
+
+:::

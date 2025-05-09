@@ -48,10 +48,7 @@ export default defineConfig({
     sidebar: [
       {
         text: "導覽",
-        items: [
-          { text: "關於本站", link: "/about" },
-          { text: "安裝", link: "/install" },
-        ],
+        items: [{ text: "關於本站", link: "/about" }],
       },
       {
         text: "元件列表",
@@ -68,6 +65,10 @@ export default defineConfig({
       {
         text: "學習之道",
         items: [{ text: "調皮的按鈕", link: "/learning/btn-naughty/" }],
+      },
+      {
+        text: "其他",
+        items: [{ text: "安裝", link: "/install" }],
       },
     ],
 

@@ -9,17 +9,17 @@ import BasicUsage from '../../../src/components/btn-naughty/examples/basic-usage
 # 調皮的按鈕 <Badge type="info" text="button" />
 
 停用時會越跑越遠的按鈕。
-
 :::tip 使用本元件必須安裝：
 
 - [VueUse](https://vueuse.org/core/useMouseInElement/)
-  :::
 
-## 使用範例
+:::
 
-### 基本用法
+## 使用規範
 
-當按鈕狀態為 disabled 並觸發 hover、click、key enter 事件時，按鈕會開始亂跑
+### 基本範例
+
+當按鈕狀態為 disabled 並觸發 hover、click、key enter 事件時，按鈕會開始亂跑。
 
 <basic-usage/>
 
@@ -27,13 +27,40 @@ import BasicUsage from '../../../src/components/btn-naughty/examples/basic-usage
 <<< ../../../src/components/btn-naughty/examples/basic-usage.vue
 :::
 
-## 核心思路
+### Props
 
-計算觸發事件的瞬間，使用者滑鼠當前位置到按鈕中心的方向距離。
+| 名稱                  | 類型               | 預設值         | 說明                           |
+| --------------------- | ------------------ | -------------- | ------------------------------ |
+| `label`               | `string`           | `按鈕預設文字` | 按鈕內的文字內容               |
+| `disabled`            | `boolean`          | `false`        | 是否停用按鈕                   |
+| `zIndex`              | `number \| string` | `undefined`    | 按鈕的 z-index 屬性            |
+| `maxDistanceMultiple` | `number`           | `5`            | 最大移動距離，為按鈕尺寸的倍數 |
+| `tabindex`            | `number \| string` | `undefined`    | 按鈕的 tabindex 屬性           |
 
-## 專案亮點
+---
 
-### 1. Props 的設計，考慮到了 zIndex 跟 tabindex。
+### Emits
+
+| 事件名稱 | 說明                         |
+| -------- | ---------------------------- |
+| `click`  | 當按鈕被點擊時觸發           |
+| `run`    | 當按鈕因滑鼠移動而逃跑時觸發 |
+| `back`   | 當按鈕回到原位時觸發         |
+
+---
+
+### Slots
+
+| 名稱      | 說明                               |
+| --------- | ---------------------------------- |
+| `default` | 按鈕的主要內容                     |
+| `rubbing` | 拓印容器的內容，默認為虛線框的樣式 |
+
+## 元件亮點
+
+核心作動原理是在按鈕被觸發事件的瞬間，偵測使用者滑鼠當前位置與按鈕中心點的向量，並基於此來做後續的處理。
+
+### 1. Props 的設計，考慮到了 z-index 跟 tabindex。
 
 <<< ../../../src/components/btn-naughty/btn-naughty.vue/#Props
 
@@ -85,6 +112,7 @@ carrierOffset.value.y -= direction.y * mouseInElement.elementHeight;
 詳細可以觀看測試原始碼；值得一提的是元件有 defineExpose 出 offset，這樣就可以在測試中取得元件的當前位置。
 
 ```javascript{2}
+/** btn-naughty.vue */
 defineExpose({
   offset: carrierOffset,
 });

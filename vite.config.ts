@@ -7,9 +7,7 @@ export default defineConfig(({ command, mode }) => {
     test: {
       globals: true,
       environment: "happy-dom",
-      coverage: {
-        reporter: ["html"],
-      },
+      reporter: ["default"], // 可加入html產生報告
     },
   };
 });
