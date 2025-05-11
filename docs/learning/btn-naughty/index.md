@@ -4,6 +4,7 @@ description: 被啟用停用時，使用者點不到的按鈕
 
 <script setup>
 import BasicUsage from '../../../src/components/btn-naughty/examples/basic-usage.vue'
+import CustomUsage from '../../../src/components/btn-naughty/examples/custom-usage.vue'
 </script>
 
 # 調皮的按鈕 <Badge type="info" text="button" />
@@ -15,17 +16,25 @@ import BasicUsage from '../../../src/components/btn-naughty/examples/basic-usage
 
 :::
 
-## 使用規範
+## 元件簡介
 
-### 基本範例
+- 當按鈕狀態為 disabled 並觸發 hover、click、key enter 事件時，按鈕會開始亂跑。
+- 可客製按鈕與按鈕底部的拓印容器樣式。
+- 其他參數詳見 Props 表。
 
-當按鈕狀態為 disabled 並觸發 hover、click、key enter 事件時，按鈕會開始亂跑。
+::: details 元件原始碼
+<<< ../../../src/components/btn-naughty/btn-naughty.vue
+:::
 
-<basic-usage/>
+## 基礎範例
 
-::: details 查看上面範例的原始碼
+<BasicUsage title="basic-usage"/>
+
+::: details 基礎範例原始碼
 <<< ../../../src/components/btn-naughty/examples/basic-usage.vue
 :::
+
+## 元件參數
 
 ### Props
 
@@ -55,6 +64,14 @@ import BasicUsage from '../../../src/components/btn-naughty/examples/basic-usage
 | --------- | ---------------------------------- |
 | `default` | 按鈕的主要內容                     |
 | `rubbing` | 拓印容器的內容，默認為虛線框的樣式 |
+
+## 客製範例
+
+<CustomUsage title="custom-usage"/>
+
+::: details 客製範例原始碼
+<<< ../../../src/components/btn-naughty/examples/basic-usage.vue
+:::
 
 ## 元件亮點
 

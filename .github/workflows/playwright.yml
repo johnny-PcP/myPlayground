@@ -1,0 +1,40 @@
+# 此工作流程名為 "Playwright 測試"
+name: Playwright Tests
+
+# 當推送或拉取請求到 main 或 master 分支時觸發此工作流程
+on:
+  push:
+    # branches: [main, master]
+  pull_request:
+    # branches: [main, master]
+
+jobs:
+  # 定義一個名為 "test" 的工作
+  test:
+    # 設定此工作的超時時間為 60 分鐘
+    timeout-minutes: 60
+    # 使用最新的 Ubuntu 環境執行此工作
+    runs-on: ubuntu-latest
+    steps:
+      # 步驟 1: 檢出儲存庫的程式碼
+      - uses: actions/checkout@v4
+      # 步驟 2: 設定 Node.js 環境，使用最新的 LTS 版本
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      # 步驟 3: 使用 npm 安裝專案依賴
+      - name: 安裝依賴
+        run: npm ci
+      # 步驟 4: 安裝 Playwright 瀏覽器及其依賴
+      - name: 安裝 Playwright 瀏覽器
+        run: npx playwright install --with-deps
+      # 步驟 5: 執行 Playwright 測試
+      - name: 執行 Playwright 測試
+        run: npx playwright test
+      # 步驟 6: 上傳 Playwright 測試報告作為工件
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }} # 僅在工作流程未被取消時上傳
+        with:
+          name: playwright-report # 工件名稱
+          path: playwright-report/ # 報告目錄的路徑
+          retention-days: 30 # 保留工件 30 天
