@@ -1,8 +1,8 @@
 <template>
   <!-- 容器 -->
-  <div class="relative">
+  <div class="relative-container">
     <!-- 拓印容器 -->
-    <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute-container">
       <slot name="rubbing">
         <!-- 拓印 -->
         <div class="btn-rubbing" />
@@ -223,6 +223,16 @@ defineExpose({
 </script>
 
 <style scoped>
+.relative-container {
+  position: relative;
+}
+
+.absolute-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
 .btn-rubbing {
   width: 100%;
   height: 100%;
@@ -239,10 +249,11 @@ defineExpose({
   background: #fefefe;
   transition-duration: 0.2s;
   color: #444;
-  &:active {
-    transition-duration: 0.1s;
-    transform: scale(0.98);
-  }
+}
+
+.btn:active {
+  transition-duration: 0.1s;
+  transform: scale(0.98);
 }
 
 .carrier {
