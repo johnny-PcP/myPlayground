@@ -12,6 +12,7 @@
     <!-- 按鈕 -->
     <div
       @click="handleTrigger"
+      @mouseenter="handleTrigger"
       @keydown.enter="handleTrigger"
       class="carrier"
       ref="carrierRef"
