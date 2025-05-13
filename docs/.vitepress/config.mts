@@ -64,7 +64,13 @@ export default defineConfig({
       },
       {
         text: "學習之道",
-        items: [{ text: "調皮的按鈕", link: "/learning/btn-naughty/" }],
+        items: [
+          { text: "調皮的按鈕", link: "/learning/btn-naughty/" },
+          {
+            text: "逐字轉場",
+            link: "/learning/text-characters-transition/",
+          },
+        ],
       },
       {
         text: "其他",
