@@ -1,6 +1,6 @@
 # 安裝
 
-簡單介紹本站有使用到的套件，並提供安裝指令。
+簡單介紹本站有使用到的套件，並提供配置流程的建議。
 
 ## 測試工具
 
@@ -72,12 +72,11 @@ npm init playwright@latest
 
 安裝後在 `package.json` 中加入：
 
-```json{3,4,5}
+```json{3,4}
 {
   "scripts": {
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:e2e-ui": "playwright test --ui"
   }
 }
 ```
-
-然後在 `playwright.config.ts` 中加入以下設定：
