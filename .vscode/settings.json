@@ -1,0 +1,26 @@
+{
+  // 關閉 Prettier 格式化
+  "prettier.enable": false,
+
+  // 啟用 ESLint 自動修復
+  "editor.codeActionsOnSave": {
+    // "source.fixAll.eslint": "explicit"
+  },
+
+  // 根據文件類型設定格式化工具
+  "[vue]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+
+  // 保持儲存時格式化
+  "editor.formatOnSave": false,
+
+  // 啟用 ESLint 作為格式化工具
+  "eslint.format.enable": true
+}

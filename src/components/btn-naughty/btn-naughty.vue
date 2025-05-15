@@ -30,7 +30,7 @@ import { reactive, ref, useAttrs, computed, watch } from "vue";
 import {
   throttleFilter,
   useMouseInElement,
-  useIntersectionObserver,
+  useIntersectionObserver
 } from "@vueuse/core";
 // #region CSSProperties
 import type { CSSProperties } from "vue";
@@ -67,7 +67,7 @@ const props = withDefaults(defineProps<Props>(), {
   disabled: false,
   zIndex: undefined,
   maxDistanceMultiple: 5,
-  tabindex: undefined,
+  tabindex: undefined
 });
 
 // #region Emits
@@ -91,7 +91,7 @@ const carrierRef = ref<HTMLDivElement>();
 const mouseInElement = reactive(
   useMouseInElement(carrierRef, {
     /** 單位是 ms，35大概是 30fps。 */
-    eventFilter: throttleFilter(35),
+    eventFilter: throttleFilter(35)
   })
 );
 // #endregion throttleFilter
@@ -99,7 +99,7 @@ const mouseInElement = reactive(
 /** 以按鈕中心為 0 點的滑鼠位置 */
 const mousePosition = computed(() => ({
   x: mouseInElement.elementX - mouseInElement.elementWidth / 2,
-  y: mouseInElement.elementY - mouseInElement.elementHeight / 2,
+  y: mouseInElement.elementY - mouseInElement.elementHeight / 2
 }));
 
 /** 按鈕容器偏移量 */
@@ -115,7 +115,7 @@ const carrierStyle = computed<CSSProperties>(() => {
   return {
     zIndex: props.zIndex,
     transform: `translate(${x}px, ${y}px)`,
-    cursor,
+    cursor
   };
 });
 // #endregion carrierStyle
@@ -124,7 +124,7 @@ const carrierStyle = computed<CSSProperties>(() => {
 function getVectorLength({
   x,
   y,
-  z = 0,
+  z = 0
 }: {
   x: number;
   y: number;
@@ -141,7 +141,7 @@ function getUnitVector({ x, y, z = 0 }: { x: number; y: number; z?: number }) {
   return {
     x: x / magnitude,
     y: y / magnitude,
-    z: z / magnitude,
+    z: z / magnitude
   };
 }
 // #endregion getUnitVector1
@@ -168,7 +168,7 @@ function run() {
   /** 判斷是否超出限制距離 */
   const maxDistance = getVectorLength({
     x: mouseInElement.elementWidth * Number(props.maxDistanceMultiple),
-    y: mouseInElement.elementHeight * Number(props.maxDistanceMultiple),
+    y: mouseInElement.elementHeight * Number(props.maxDistanceMultiple)
   });
   const distance = getVectorLength(carrierOffset.value);
   const outOfRange = distance > maxDistance;
@@ -218,7 +218,7 @@ watch(
 // #region defineExpose
 defineExpose({
   /** 按鈕目前偏移量 */
-  offset: carrierOffset,
+  offset: carrierOffset
 });
 // #endregion defineExpose
 </script>
