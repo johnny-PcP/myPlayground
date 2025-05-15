@@ -25,7 +25,7 @@ import anime from "animejs";
 interface Props {
   /** 是否顯示 */
   visible?: boolean;
-  /** 文字內容，矩陣表示已經分割好的文字 */
+  /** 文字內容，也可接收已經分割好的陣列 */
   label: string | string[];
 
   /** html tag
@@ -33,13 +33,13 @@ interface Props {
    */
   tag?: string;
 
-  /** 如何切割文字
-   * 只有在 label 為 string 時有效
+  /** 文字切割邏輯
+   * 會設定為只有 label 為 string 時有效
    * @default /.*?/u
    */
   splitter?: RegExp | ((label: string) => string[]);
 
-  /** 動畫名稱
+  /** 套用的動畫名稱
    * @default 'fade'
    */
   name?: string;
@@ -83,7 +83,6 @@ const chars = computed(() =>
     map((data, i, array) => {
       const elId = `${id}-${i}`;
       const animate = transitionProvider[props.name];
-
       return {
         value: data,
         id: elId,

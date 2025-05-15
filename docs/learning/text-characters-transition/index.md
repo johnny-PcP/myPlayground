@@ -31,7 +31,29 @@ import BasicUsage from '../../../src/components/text-characters-transition/examp
 
 ## 原理
 
-文字文字文字文字文字文字文字文字文字文字文字
+生成類似：下面的結構
+
+```html
+<template>
+  <p>
+    <span>使</span>
+    <span>用</span>
+    <span>者</span>
+    <span>文</span>
+    <span>字</span>
+  </p>
+</template>
+```
+
+</template>
+
+1. 使用 Vue.js 的 [:is](https://hromium.com/javascript-visualized-event-loop) 語法，能夠依據使用者的需求動態生成 DOM 元素。
+
+```javascript
+  <component :is="props.tag" ></component>
+```
+
+2.
 
 ## API
 
@@ -46,3 +68,7 @@ import BasicUsage from '../../../src/components/text-characters-transition/examp
 ### Methods
 
 <<< ../../../src/components/text-characters-transition/text-characters-transition.vue/#Methods
+
+```
+
+```
