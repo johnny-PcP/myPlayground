@@ -109,11 +109,11 @@ import type { CSSProperties } from "vue";
 
 ```javascript
 /** 取得按鈕中心到滑鼠的單位方向 */
-const direction = getUnitVector(mousePosition.value);
+const direction = getUnitVector(mousePosition.value)
 
 /** 往遠離滑鼠的方向移動一個按鈕的距離 */
-carrierOffset.value.x -= direction.x * mouseInElement.elementWidth;
-carrierOffset.value.y -= direction.y * mouseInElement.elementHeight;
+carrierOffset.value.x -= direction.x * mouseInElement.elementWidth
+carrierOffset.value.y -= direction.y * mouseInElement.elementHeight
 ```
 
 :::

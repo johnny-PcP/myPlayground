@@ -1,26 +1,54 @@
 {
-  // 關閉 Prettier 格式化
-  "prettier.enable": false,
+  // 關閉預設格式化工具，改用 ESLint
+  // Disable the default formatter, use eslint instead
+  "prettier.enable": false, // 禁用 Prettier
+  "editor.formatOnSave": false, // 關閉儲存時格式化功能
 
-  // 啟用 ESLint 自動修復
+  // 自動修正設定
+  // Auto fix
   "editor.codeActionsOnSave": {
-    // "source.fixAll.eslint": "explicit"
+    "source.fixAll.eslint": "explicit", // 儲存時自動執行 ESLint 修復
+    "source.organizeImports": "never" // 禁用 VS Code 自動整理導入功能
   },
 
-  // 根據文件類型設定格式化工具
-  "[vue]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  },
-  "[javascript]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  },
+  // 在 IDE 中隱藏樣式規則警告，但仍然自動修復
+  // Silent the stylistic rules in you IDE, but still auto fix them
+  "eslint.rules.customizations": [
+    { "rule": "style/*", "severity": "off", "fixable": true }, // 隱藏所有樣式相關規則
+    { "rule": "format/*", "severity": "off", "fixable": true }, // 隱藏所有格式相關規則
+    { "rule": "*-indent", "severity": "off", "fixable": true }, // 隱藏縮排相關規則
+    { "rule": "*-spacing", "severity": "off", "fixable": true }, // 隱藏間距相關規則
+    { "rule": "*-spaces", "severity": "off", "fixable": true }, // 隱藏空格相關規則
+    { "rule": "*-order", "severity": "off", "fixable": true }, // 隱藏排序相關規則
+    { "rule": "*-dangle", "severity": "off", "fixable": true }, // 隱藏尾隨符號相關規則
+    { "rule": "*-newline", "severity": "off", "fixable": true }, // 隱藏換行相關規則
+    { "rule": "*quotes", "severity": "off", "fixable": true }, // 隱藏引號相關規則
+    { "rule": "*semi", "severity": "off", "fixable": true } // 隱藏分號相關規則
+  ],
 
-  // 保持儲存時格式化
-  "editor.formatOnSave": false,
-
-  // 啟用 ESLint 作為格式化工具
-  "eslint.format.enable": true
+  // 為所有支援的語言啟用 ESLint
+  // Enable eslint for all supported languages
+  "eslint.validate": [
+    "javascript", // JavaScript 檔案
+    "javascriptreact", // JSX 檔案
+    "typescript", // TypeScript 檔案
+    "typescriptreact", // TSX 檔案
+    "vue", // Vue 檔案
+    "html", // HTML 檔案
+    "markdown", // Markdown 檔案
+    "json", // JSON 檔案
+    "jsonc", // JSONC 檔案 (帶註釋的 JSON)
+    "yaml", // YAML 檔案
+    "toml", // TOML 檔案
+    "xml", // XML 檔案
+    "gql", // GraphQL 檔案
+    "graphql", // GraphQL 檔案 (另一種擴展名)
+    "astro", // Astro 檔案
+    "svelte", // Svelte 檔案
+    "css", // CSS 檔案
+    "less", // Less 檔案
+    "scss", // SCSS 檔案
+    "pcss", // PostCSS 檔案
+    "postcss" // PostCSS 檔案 (另一種擴展名)
+  ]
 }

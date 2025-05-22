@@ -13,5 +13,5 @@
 import { ref } from 'vue'
 import TextCharactersTransition from '../text-characters-transition.vue'
 
-const visible = ref(true);
+const visible = ref(true)
 </script>

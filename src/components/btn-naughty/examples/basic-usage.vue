@@ -1,21 +1,21 @@
 <template>
   <div class="container">
     <label class="flex items-center border p-4 rounded">
-      <input v-model="disabled" type="checkbox" />
+      <input v-model="disabled" type="checkbox">
       <span class="ml-2"> 停用按鈕 </span>
     </label>
     <div class="component-area">
-      <BtnNaughty :disabled :maxDistanceMultiple="2" />
+      <btn-naughty :disabled :max-distance-multiple="2" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref } from 'vue'
 
-import BtnNaughty from "../btn-naughty.vue";
+import BtnNaughty from '../btn-naughty.vue'
 
-const disabled = ref(true);
+const disabled = ref(true)
 </script>
 
 <style scoped>

@@ -1,17 +1,16 @@
-import anime from "animejs";
-import { first, pipe, sample, times } from "remeda";
+import type anime from 'animejs'
 
 export type AnimeFuncParam = (
   /** 目前 index。例：第 3 個字，此值就是 2 */
   index: number,
   /** 動畫總數。例：共 10 個字，此值就會是 10 */
   length: number
-) => anime.AnimeParams;
+) => anime.AnimeParams
 
 /** 過場動畫名稱 */
 export enum TransitionName {
   /** 淡入淡出 */
-  FADE = "fade",
+  FADE = 'fade',
 }
 
 export const transitionProvider: Record<
@@ -32,4 +31,4 @@ export const transitionProvider: Record<
       delay: i * 50,
     }),
   },
-};
+}
