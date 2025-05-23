@@ -6,6 +6,11 @@
     </label>
 
     <text-characters-transition :visible label="文字具有動畫效果" />
+    <text-characters-transition
+      :enter="(i) => ({ delay: i * 5 })"
+      :leave="(i) => ({ delay: i * 5 })"
+      :visible label="我是很長很長很長很長很長很長很長很長很長很長很長很長很長很長很長很長很長很長很長很長的文字"
+    />
   </div>
 </template>
 

@@ -45,8 +45,6 @@ import BasicUsage from '../../../src/components/text-characters-transition/examp
 </template>
 ```
 
-</template>
-
 1. 使用 Vue.js 的 [:is](https://hromium.com/javascript-visualized-event-loop) 語法，能夠依據使用者的需求動態生成 DOM 元素。
 
 ```vue
