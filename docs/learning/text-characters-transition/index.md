@@ -4,6 +4,7 @@ description: 具有進入進出動畫的文字。
 
 <script setup>
 import BasicUsage from '../../../src/components/text-characters-transition/examples/basic-usage.vue'
+import CustomSplitter from '../../../src/components/text-characters-transition/examples/custom-splitter.vue'
 </script>
 
 # 逐字轉場
@@ -28,7 +29,11 @@ import BasicUsage from '../../../src/components/text-characters-transition/examp
 ::: details 查看範例原始碼
 <<< ../../../src/components/text-characters-transition/examples/basic-usage.vue
 :::
+<custom-splitter/>
 
+::: details 查看範例原始碼
+<<< ../../../src/components/text-characters-transition/examples/custom-splitter.vue
+:::
 ## 原理
 
 生成類似：下面的結構
