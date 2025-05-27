@@ -11,6 +11,9 @@ export type AnimeFuncParam = (
 export enum TransitionName {
   /** 淡入淡出 */
   FADE = 'fade',
+  /** 其他更多動畫效果 */
+  BLUR = 'blur',
+  CLIP_RIGHT = 'clip-right',
 }
 
 export const transitionProvider: Record<
@@ -31,4 +34,38 @@ export const transitionProvider: Record<
       delay: i * 50,
     }),
   },
+  [TransitionName.BLUR]: {
+    enter: (i) => ({
+      opacity: 1,
+      filter: ['blur(10px)', 'blur(0px)'],
+      delay: i * 100,
+      easing: 'easeOutCirc',
+    }),
+    leave: (i) => ({
+      opacity: 0,
+      filter: ['blur(0px)', 'blur(10px)'],
+      delay: i * 100,
+      easing: 'easeInCirc',
+    }),
+
+  },
+  [TransitionName.CLIP_RIGHT]: {
+    enter: (i) => ({
+      clipPath: [
+        'polygon(0 0, 0 0, 0 100%, 0% 100%)',
+        'polygon(0 0, 100% 0, 100% 100%, 0% 100%)',
+      ],
+      delay: i * 10,
+      easing: 'easeInOutCirc',
+    }),
+    leave: (i) => ({
+      clipPath: [
+        'polygon(0 0, 100% 0, 100% 100%, 0% 100%)',
+        'polygon(100% 0, 100% 0, 100% 100%, 100% 100%)',
+      ],
+      delay: i * 10,
+      easing: 'easeInOutCirc',
+    }),
+  },
+
 }

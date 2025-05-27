@@ -5,6 +5,8 @@ description: 具有進入進出動畫的文字。
 <script setup>
 import BasicUsage from '../../../src/components/text-characters-transition/examples/basic-usage.vue'
 import CustomSplitter from '../../../src/components/text-characters-transition/examples/custom-splitter.vue'
+import TransitionType from '../../../src/components/text-characters-transition/examples/transition-type.vue'
+import CustomTransition from '../../../src/components/text-characters-transition/examples/custom-transition.vue'
 </script>
 
 # 逐字轉場
@@ -14,7 +16,7 @@ import CustomSplitter from '../../../src/components/text-characters-transition/e
 :::tip 使用本元件必須安裝：
 
 - [Remeda](https://remeda.dev/)
-- [animejs](https://animejs.com/v3/documentation/) ( v3 )
+- [animejs](https://animejs.com/v3/documentation/) ( v3 版本)
 
 :::
 
@@ -22,7 +24,7 @@ import CustomSplitter from '../../../src/components/text-characters-transition/e
 
 ### 基本用法
 
-預設就是經典的淡入淡出。
+預設為陽春的淡入淡出。
 
 <BasicUsage />
 
@@ -34,6 +36,29 @@ import CustomSplitter from '../../../src/components/text-characters-transition/e
 ::: details 查看範例原始碼
 <<< ../../../src/components/text-characters-transition/examples/custom-splitter.vue
 :::
+
+### 轉場類型
+
+元件的簡易內建效果（點擊以下任一方塊，開始切換）
+
+<transition-type/>
+
+::: details 查看範例原始碼
+<<< ../../../src/components/text-characters-transition/examples/transition-type.vue
+:::
+
+### 自定義轉場
+
+也可以自定義效果，寫法詳見 [anime.js 文件](https://animejs.com/v3/documentation/)
+
+（點擊以下任一方塊，開始切換）
+
+<custom-transition />
+
+::: details 查看範例原始碼
+<<< ../../../src/components/text-characters-transition/examples/custom-transition.vue
+:::
+
 ## 原理
 
 生成類似：下面的結構
