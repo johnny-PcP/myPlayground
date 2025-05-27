@@ -26,12 +26,12 @@ import CustomTransition from '../../../src/components/text-characters-transition
 
 預設為陽春的淡入淡出。
 
-<BasicUsage />
+<BasicUsage title="basic-usage"/>
 
 ::: details 查看範例原始碼
 <<< ../../../src/components/text-characters-transition/examples/basic-usage.vue
 :::
-<custom-splitter/>
+<custom-splitter title="custom-splitter"/>
 
 ::: details 查看範例原始碼
 <<< ../../../src/components/text-characters-transition/examples/custom-splitter.vue
@@ -41,7 +41,7 @@ import CustomTransition from '../../../src/components/text-characters-transition
 
 元件的簡易內建效果（點擊以下任一方塊，開始切換）
 
-<transition-type/>
+<transition-type title="transition-type"/>
 
 ::: details 查看範例原始碼
 <<< ../../../src/components/text-characters-transition/examples/transition-type.vue
@@ -53,7 +53,7 @@ import CustomTransition from '../../../src/components/text-characters-transition
 
 （點擊以下任一方塊，開始切換）
 
-<custom-transition />
+<custom-transition title="custom-transition" />
 
 ::: details 查看範例原始碼
 <<< ../../../src/components/text-characters-transition/examples/custom-transition.vue
