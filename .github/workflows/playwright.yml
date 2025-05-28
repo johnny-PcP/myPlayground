@@ -2,11 +2,11 @@
 name: Playwright Tests
 
 # 當推送或拉取請求到 main 或 master 分支時觸發此工作流程
-on:
-  push:
-  # branches: [main, master]
-  pull_request:
-  # branches: [main, master]
+# on:
+# push:
+# branches: [main, master]
+# pull_request:
+# branches: [main, master]
 
 jobs:
   # 定義一個名為 "test" 的工作

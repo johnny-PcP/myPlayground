@@ -9,7 +9,7 @@
         @click="toggleVisible(item)"
       >
         <text-characters-transition
-          label="一段展示用的文字"
+          label="展示用的文字"
           v-bind="item"
           class=" pointer-events-none"
         />

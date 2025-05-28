@@ -223,11 +223,6 @@ onBeforeUnmount(() => {
   // 確保組件卸載時清理所有動畫
   anime.remove(`.${id}`)
 })
-
-// #region Methods
-// 對外暴露的方法（暫無）
-defineExpose({})
-// #endregion Methods
 </script>
 
 <!-- 組件樣式（當前沒有樣式定義） -->

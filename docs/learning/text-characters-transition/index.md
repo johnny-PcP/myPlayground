@@ -82,8 +82,9 @@ import CustomTransition from '../../../src/components/text-characters-transition
   <component :is="props.tag" />
 </template>
 ```
+2. 使用 [Remeda](https://remeda.dev/) 的 `split` 方法，將文字分割成單個字元。
 
-2.
+3. 使用 [anime.js](https://animejs.com/v3/documentation/) 來實現動畫效果。
 
 ## API
 
