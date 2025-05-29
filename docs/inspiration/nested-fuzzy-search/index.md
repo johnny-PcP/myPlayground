@@ -3,8 +3,8 @@ description: 可針對巢狀物件模糊搜尋的輸入元件。
 ---
 
 <script setup>
-import BasicUsage from '../../../src/components/n-gram-searcher/examples/basic-usage.vue'
-import BtnUsage from '../../../src/components/n-gram-searcher/examples/btn-usage.vue'
+import BasicUsage from '../../../src/components/nested-fuzzy-search/examples/basic-usage.vue'
+import BtnUsage from '../../../src/components/nested-fuzzy-search/examples/btn-usage.vue'
 </script>
 
 # 巢狀模糊搜尋器 <Badge type="info" text="input" />
@@ -15,6 +15,10 @@ import BtnUsage from '../../../src/components/n-gram-searcher/examples/btn-usage
 - 可以針對巢狀物件進行模糊搜尋的輸入元件。
 - 可以客製模糊搜尋的精度。
 - 預設為直接返回匹配結果，亦可改為函式觸發。
+
+::: details 元件原始碼
+<<< ../../../src/components/nested-fuzzy-search/nested-fuzzy-search.vue
+:::
 
 ## 基礎範例
 
@@ -118,21 +122,62 @@ interface DataItem {
 <BasicUsage title="basic-usage"/>
 
 ::: details 查看範例原始碼
-<<< ../../../src/components/n-gram-searcher/examples/basic-usage.vue
+<<< ../../../src/components/nested-fuzzy-search/examples/basic-usage.vue
 :::
 
 ## 元件參數
 
 ### Props
 
+| name | type | default | require | note |
+|---------|------|--------|----------|------|
+| `data` | `any[]` | - | ✓ | 要搜尋的資料陣列 |
+| `placeholder` | `string` | `'請輸入搜尋關鍵字'` | - | 輸入框的提示文字 |
+| `matchPrecision` | `number` | `0.3` | - | 相似度閾值，範圍 0-1，數值越高匹配越嚴格 |
+| `autoEmitResults` | `boolean` | `true` | - | 是否自動發送搜尋結果，設為 false 時需手動調用 `triggerSearch()` |
+| `debounceMs` | `number` | `300` | - | 防抖延遲時間（毫秒），減少搜尋頻率以提升效能 |
+
 ### Emits
+
+| name | type | note |
+|---------|------|------|
+| `search` | `results: any[]` | 當搜尋結果變更時觸發，傳回符合條件的資料陣列 |
 
 ## 客製範例
 
 <BtnUsage title="btn-usage"/>
 
 ::: details 查看範例原始碼
-<<< ../../../src/components/n-gram-searcher/examples/btn-usage.vue
+<<< ../../../src/components/nested-fuzzy-search/examples/btn-usage.vue
 :::
 
 ## 作動原理
+
+更實際的作動原理在元件原始碼中有寫上註解，這邊僅簡單說明：
+
+### 模糊比對
+
+1. 先將文字拆分成2-gram（雙字母組合），比方說 "hello" 會被拆分成 ["he", "el", "ll", "lo"]。
+
+2. 再將使用者輸入的文字也拆分成2-gram，再去比對符合的程度有多高。
+
+### 巢狀搜尋
+
+1. 取得遞迴方式，取得全部資料的key，再針對全部取得的key進行模糊比對。
+    - 例如對於這樣的資料：
+```javascript{3,4}
+const data = {
+  user: {
+    profile: { name: 'Alice', age: 30 },
+    tags: ['vue', 'javascript']
+  }
+}
+```
+2. 會取得的key為：`['user', 'profile', 'name', 'age', 'tags']`。
+
+3. 再另外根據路徑字串動態提取巢狀物件中的值
+```javascript
+getValueByPath(data, 'user.profile.name') // 'Alice'
+getValueByPath(data, 'user.tags[0]') // 'vue'
+```
+4. 最後將這些值進行模糊比對，再用some判斷，只要物件內有一個成員符合條件，就會這個物件返回（成為搜尋結果）。
