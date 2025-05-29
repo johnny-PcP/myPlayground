@@ -54,9 +54,9 @@ export default defineConfig({
         link: '/components/',
         items: [
           {
-            text: '文字輸入框',
+            text: '文字輸入',
             items: [
-              { text: '非精準搜尋', link: '/inspiration/nested-fuzzy-search' },
+              { text: '巢狀模糊搜尋器', link: '/inspiration/n-gram-searcher' },
             ],
           },
         ],
