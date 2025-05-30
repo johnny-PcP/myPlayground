@@ -56,7 +56,13 @@ export default defineConfig({
           {
             text: '文字輸入',
             items: [
-              { text: '巢狀模糊搜尋器', link: '/inspiration/n-gram-searcher' },
+              { text: '巢狀模糊搜尋器', link: '/inspiration/nested-fuzzy-search/' },
+            ],
+          },
+          {
+            text: '互動組件',
+            items: [
+              { text: '即時渲染通知', link: '/inspiration/render-dialog/' },
             ],
           },
         ],

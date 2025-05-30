@@ -39,6 +39,19 @@ const searchQuery: ModelRef<string> = defineModel({ default: '' })
 // 使用防抖處理搜尋查詢
 const debouncedSearchQuery = useDebounce(searchQuery, props.debounceMs)
 
+// 計算搜尋結果 - 當查詢字串或資料變化時自動重新計算
+const results: Ref<any[]> = computed(() => {
+  // 去除查詢字串的前後空白並轉為小寫
+  const trimmedQuery = debouncedSearchQuery.value.trim().toLowerCase()
+
+  // 如果沒有查詢字串，就不反回任何結果
+  if (!trimmedQuery)
+    return []
+  const ItemMatchedFn = isItemMatchedMaker(trimmedQuery)
+  // 返回匹配的項目
+  return props.data.filter(ItemMatchedFn)
+})
+
 /**
  * 1.生成字串的 N-gram
  * 原理：將文字分割成連續 n 個字符的技術，用於後面模糊搜尋使用
@@ -72,38 +85,40 @@ function getNGrams(str: string, n: number = 2): string[] {
 function getNGramMatchScore(targetString: string, queryString: string, n: number = 2): number {
   const targetLower = targetString.toLowerCase()
   const queryLower = queryString.toLowerCase()
-  
+
   // 處理短字串的情況
   if (queryLower.length === 1) {
     // 單字符：給予較低的基礎分數，避免太多雜訊
     return targetLower.includes(queryLower) ? 0.3 : 0
   }
-  
+
   if (targetLower.length < n || queryLower.length < n) {
     // 字串太短無法生成 N-gram，使用字串包含判斷
     return targetLower.includes(queryLower) ? 0.8 : 0
   }
-  
+
   // 完全匹配給予滿分
-  if (targetLower === queryLower) return 1.0
-  
+  if (targetLower === queryLower)
+    return 1.0
+
   const targetGrams = getNGrams(targetLower, n)
   const queryGrams = getNGrams(queryLower, n)
-  
+
   const intersection = targetGrams.filter((gram) => queryGrams.includes(gram))
-  
-  const queryCoverage = intersection.length / queryGrams.length 
-  const targetCoverage = intersection.length / targetGrams.length 
-  
-  if (queryCoverage + targetCoverage === 0) return 0
-  
+
+  const queryCoverage = intersection.length / queryGrams.length
+  const targetCoverage = intersection.length / targetGrams.length
+
+  if (queryCoverage + targetCoverage === 0)
+    return 0
+
   let score = (2 * queryCoverage * targetCoverage) / (queryCoverage + targetCoverage)
-  
+
   // 給予字串包含關係額外加分
   if (targetLower.includes(queryLower)) {
     score = Math.min(score + 0.2, 1.0)
   }
-  
+
   return score
 }
 
@@ -236,19 +251,6 @@ function isItemMatchedMaker(queryString) {
     })
   }
 }
-
-// 計算搜尋結果 - 當查詢字串或資料變化時自動重新計算
-const results: Ref<any[]> = computed(() => {
-  // 去除查詢字串的前後空白並轉為小寫
-  const trimmedQuery = debouncedSearchQuery.value.trim().toLowerCase()
-
-  // 如果沒有查詢字串，就不反回任何結果
-  if (!trimmedQuery)
-    return []
-  const ItemMatchedFn = isItemMatchedMaker(trimmedQuery)
-  // 返回匹配的項目
-  return props.data.filter(ItemMatchedFn)
-})
 
 /**
  * 手動觸發搜尋結果發送
