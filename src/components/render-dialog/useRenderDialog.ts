@@ -35,6 +35,8 @@ export interface UseDialogOptions {
 
 export function useDialog(options: UseDialogOptions = {}) {
   let container: HTMLElement | null = null
+  let dialogElement: HTMLDialogElement | null = null
+  let isOpen = false
 
   function checkPortalContainer(target: string): HTMLElement {
     // 如果是 body，直接返回
@@ -53,11 +55,21 @@ export function useDialog(options: UseDialogOptions = {}) {
   }
 
   function open(dialogOptions: DialogOptions) {
+    // 如果已經有 dialog 打開，先關閉它
+    if (isOpen) {
+      close()
+    }
+
+    isOpen = true
+
     // 決定 Teleport 目標：單次設定 > 全域設定 > 關閉
     const teleportTarget = dialogOptions.teleport ?? options.teleport
 
     // 創建容器
     container = document.createElement('div')
+    // 為容器添加唯一 ID，便於後續識別
+    const containerId = `dialog-container-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+    container.id = containerId
     document.body.appendChild(container)
 
     let vNode
@@ -104,20 +116,18 @@ export function useDialog(options: UseDialogOptions = {}) {
 
     // 顯示對話框 - 使用 nextTick 確保 DOM 更新完成
     nextTick(() => {
-      let dialogEl: HTMLDialogElement | null = null
-
       if (teleportTarget) {
         // 使用 Teleport 時，dialog 會被移動到目標容器
         const targetContainer = teleportTarget === true ? document.body : checkPortalContainer(teleportTarget as string)
-        dialogEl = targetContainer.querySelector('dialog:last-of-type')
+        dialogElement = targetContainer.querySelector('dialog:last-of-type')
       }
       else {
         // 不使用 Teleport 時，dialog 在原始容器中
-        dialogEl = container?.querySelector('dialog') || null
+        dialogElement = container?.querySelector('dialog') || null
       }
 
-      if (dialogEl) {
-        dialogEl.style.display = 'block'
+      if (dialogElement) {
+        dialogElement.style.display = 'block'
       }
     })
   }
@@ -129,10 +139,12 @@ export function useDialog(options: UseDialogOptions = {}) {
       document.body.removeChild(container)
       container = null
     }
+    isOpen = false
   }
 
   return {
     open,
     close,
+    isOpen: () => isOpen,
   }
 }
