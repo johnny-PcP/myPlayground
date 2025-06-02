@@ -9,14 +9,14 @@ import ComprehensiveDemo from '../../../src/components/render-dialog/examples/co
 
 # 即時渲染對話框 <Badge type="info" text="composable" />
 
-歷經幾個自己專案，改到v3版本。
-藉由 Composable 函式，就能實現顯示HTML原生的 `<Dialog>` ，並能執行 JavaScript 回調函式的組件。
+Dialog是網頁很常見的需求，常出現在用戶有重要決策時，且在整個網頁會一再出現。這個組件歷經的自己幾個專案，改到v3版本，從本來需要將組件放在App.vue，到這版改成藉由 Composable 函式配合渲染函式實現HTML原生的 `<Dialog>`使用。
 
 ## 元件簡介
 
 - 無需在模板中預先放置組件，將 Composable 引入即可使用。
 - 每個動作都可以綁定回調函式（甚至背景點擊也可配置）。
 - 可選的 Teleport 功能，解決 z-index 層級衝突。
+- 當嘗試開啟新 Dialog 時，如果當下已經有 Dialog 打開，會自動關閉現有的 Dialog。
 
 ::: details 元件原始碼
 <<< ../../../src/components/render-dialog/render-dialog.vue
@@ -49,6 +49,7 @@ import ComprehensiveDemo from '../../../src/components/render-dialog/examples/co
 |------|------|------|
 | `open` | `(options: DialogOptions) => void` | 開啟對話框 |
 | `close` | `() => void` | 關閉對話框 |
+| `isOpen` | `() => boolean` | 檢查當前是否有對話框打開 |
 
 ### 配置選項
 

@@ -6,7 +6,11 @@
     @click="handleBackdropClick"
   />
 
-  <dialog class="dialog" @click.stop>
+  <dialog
+    :id="dialogId"
+    class="dialog"
+    @click.stop
+  >
     <!-- 標題 -->
     <div class="dialog-title">
       {{ dialogOption.title }}
@@ -61,7 +65,7 @@
 <script setup>
 import { computed } from 'vue'
 
-const props = defineProps(['dialogOption'])
+const props = defineProps(['dialogOption', 'dialogId'])
 const emit = defineEmits(['confirm', 'cancel'])
 
 // 計算背景樣式

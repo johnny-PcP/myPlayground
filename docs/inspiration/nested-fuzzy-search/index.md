@@ -43,73 +43,143 @@ interface DataItem {
 [
   {
     id: 1,
-    title: 'Vue.js 完整開發指南',
-    keywords: ['Vue', 'JavaScript', '前端', 'SPA'],
+    title: 'Complete Vue.js Development Guide',
+    keywords: ['Vue', 'JavaScript', 'Frontend', 'SPA'],
     author: {
-      name: '張小明',
-      email: 'zhang@example.com'
+      name: 'John Smith',
+      email: 'john@example.com',
     },
     chapters: [
-      { name: '基礎概念', duration: 120 },
+      { name: 'Basic Concepts', duration: 120 },
       { name: 'Composition API', duration: 180 },
-      { name: '狀態管理', duration: 150 }
-    ]
+      { name: 'State Management', duration: 150 },
+    ],
   },
   {
     id: 2,
-    title: 'React 效能優化實戰',
-    keywords: ['React', 'Performance', '優化'],
+    title: 'React Performance Optimization',
+    keywords: ['React', 'Performance', 'Optimization'],
     author: {
-      name: '李美華',
-      email: 'li@example.com'
+      name: 'Emily Johnson',
+      email: 'emily@example.com',
     },
     chapters: [
-      { name: 'Virtual DOM 原理', duration: 90 },
-      { name: 'Memo 與 Callback', duration: 110 },
-      { name: '代碼分割', duration: 100 }
-    ]
+      { name: 'Virtual DOM Principles', duration: 90 },
+      { name: 'Memo and Callback', duration: 110 },
+      { name: 'Code Splitting', duration: 100 },
+    ],
   },
   {
     id: 3,
-    title: 'Node.js 後端開發',
-    keywords: ['Node.js', 'Express', 'API', '後端'],
+    title: 'Node.js Backend Development',
+    keywords: ['Node.js', 'Express', 'API', 'Backend'],
     author: {
-      name: '王大安',
-      email: 'wang@example.com'
+      name: 'Michael Brown',
+      email: 'michael@example.com',
     },
     chapters: [
-      { name: 'Express 框架', duration: 140 },
-      { name: 'MongoDB 整合', duration: 160 },
-      { name: 'Authentication', duration: 130 }
-    ]
+      { name: 'Express Framework', duration: 140 },
+      { name: 'MongoDB Integration', duration: 160 },
+      { name: 'Authentication', duration: 130 },
+    ],
   },
   {
     id: 4,
-    title: 'Python 資料科學',
-    keywords: ['Python', '資料分析', 'Pandas', 'NumPy'],
+    title: 'Python Data Science',
+    keywords: ['Python', 'Data Analysis', 'Pandas', 'NumPy'],
     author: {
-      name: '陳志強',
-      email: 'chen@example.com'
+      name: 'Sarah Wilson',
+      email: 'sarah@example.com',
     },
     chapters: [
-      { name: 'Pandas 基礎', duration: 200 },
-      { name: '資料視覺化', duration: 170 },
-      { name: '機器學習入門', duration: 220 }
-    ]
+      { name: 'Pandas Basics', duration: 200 },
+      { name: 'Data Visualization', duration: 170 },
+      { name: 'Machine Learning Intro', duration: 220 },
+    ],
   },
   {
     id: 5,
-    title: 'Docker 容器化部署',
-    keywords: ['Docker', 'DevOps', '容器', '部署'],
+    title: 'Docker Containerization',
+    keywords: ['Docker', 'DevOps', 'Container', 'Deployment'],
     author: {
-      name: '林雅婷',
-      email: 'lin@example.com'
+      name: 'David Lee',
+      email: 'david@example.com',
     },
     chapters: [
-      { name: 'Docker 基礎', duration: 80 },
-      { name: 'Dockerfile 撰寫', duration: 95 },
-      { name: 'Docker Compose', duration: 120 }
-    ]
+      { name: 'Docker Basics', duration: 80 },
+      { name: 'Dockerfile Writing', duration: 95 },
+      { name: 'Docker Compose', duration: 120 },
+    ],
+  },
+  {
+    id: 6,
+    title: 'Advanced TypeScript Development',
+    keywords: ['TypeScript', 'Types', 'Advanced', 'JavaScript'],
+    author: {
+      name: 'Alex Chen',
+      email: 'alex@example.com',
+    },
+    chapters: [
+      { name: 'Type System', duration: 110 },
+      { name: 'Generic Programming', duration: 140 },
+      { name: 'Decorator Pattern', duration: 90 },
+    ],
+  },
+  {
+    id: 7,
+    title: 'Swift iOS App Development',
+    keywords: ['Swift', 'iOS', 'Mobile App', 'UIKit'],
+    author: {
+      name: 'Lisa Garcia',
+      email: 'lisa@example.com',
+    },
+    chapters: [
+      { name: 'Swift Syntax', duration: 160 },
+      { name: 'UIKit Components', duration: 180 },
+      { name: 'Data Persistence', duration: 120 },
+    ],
+  },
+  {
+    id: 8,
+    title: 'Kubernetes Cluster Management',
+    keywords: ['Kubernetes', 'K8s', 'Orchestration', 'DevOps'],
+    author: {
+      name: 'Robert Martinez',
+      email: 'robert@example.com',
+    },
+    chapters: [
+      { name: 'Basic Concepts', duration: 100 },
+      { name: 'Pods and Services', duration: 150 },
+      { name: 'Deployment Strategies', duration: 170 },
+    ],
+  },
+  {
+    id: 9,
+    title: 'Machine Learning Algorithms',
+    keywords: ['AI', 'Machine Learning', 'Algorithms', 'TensorFlow'],
+    author: {
+      name: 'Amy Zhang',
+      email: 'amy@example.com',
+    },
+    chapters: [
+      { name: 'Supervised Learning', duration: 240 },
+      { name: 'Neural Networks', duration: 200 },
+      { name: 'Deep Learning', duration: 280 },
+    ],
+  },
+  {
+    id: 10,
+    title: 'Web Security Protection',
+    keywords: ['Security', 'HTTPS', 'XSS', 'CSRF'],
+    author: {
+      name: 'Kevin Anderson',
+      email: 'kevin@example.com',
+    },
+    chapters: [
+      { name: 'Common Attack Methods', duration: 130 },
+      { name: 'Defense Mechanisms', duration: 150 },
+      { name: 'Security Testing', duration: 110 },
+    ],
   },
 ]
 ```

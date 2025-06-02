@@ -1,17 +1,12 @@
 <template>
   <div class="basic-usage-demo">
-    <h3>基本對話框範例</h3>
-    <p class="demo-description">
-      點擊按鈕開啟一個包含標題、內容和確認/取消按鈕的基本對話框。預設情況下，點擊背景無法關閉對話框。
-    </p>
-
     <div class="demo-buttons">
       <button class="demo-btn" @click="openBasicDialog">
-        開啟基本對話框
+        基本範例
       </button>
 
       <button class="demo-btn test-btn" @click="openClickableDialog">
-        🧪 測試點擊背景關閉
+        支援背景點擊
       </button>
     </div>
   </div>
@@ -42,10 +37,10 @@ function openBasicDialog() {
 }
 
 function openClickableDialog() {
-  console.warn('🧪 開始測試點擊背景關閉功能')
+  console.warn('開始測試點擊背景關閉功能')
 
   dialog.open({
-    title: '🧪 背景點擊測試',
+    title: '背景點擊測試',
     content: [
       '這是一個測試對話框',
       '背景設定為可點擊關閉',
@@ -55,13 +50,13 @@ function openClickableDialog() {
     confirm: {
       btnName: '確認',
       onComplete: () => {
-        console.warn('✅ 透過確認按鈕關閉')
+        console.warn('透過確認按鈕關閉')
       },
     },
     cancel: {
       btnName: '取消',
       onComplete: () => {
-        console.warn('✅ 透過取消按鈕關閉')
+        console.warn('透過取消按鈕關閉')
       },
     },
     backdrop: {
@@ -69,7 +64,7 @@ function openClickableDialog() {
       blur: '8px',
       closeOnClick: true,
       onBackdropClick: () => {
-        console.warn('🎯 背景點擊回調被執行了！')
+        console.warn('背景點擊回調被執行了！')
       },
     },
   })
@@ -112,11 +107,6 @@ function openClickableDialog() {
 .test-btn {
   background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
   position: relative;
-}
-
-.test-btn::before {
-  content: '🧪 ';
-  margin-right: 2px;
 }
 
 .demo-description {

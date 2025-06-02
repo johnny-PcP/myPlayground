@@ -62,7 +62,7 @@ export default defineConfig({
           {
             text: '互動組件',
             items: [
-              { text: '即時渲染通知', link: '/inspiration/render-dialog/' },
+              { text: '即時渲染對話框', link: '/inspiration/render-dialog/' },
             ],
           },
         ],

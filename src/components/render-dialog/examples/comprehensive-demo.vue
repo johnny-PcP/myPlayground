@@ -1,10 +1,5 @@
 <template>
   <div class="comprehensive-demo">
-    <h3>進階功能範例</h3>
-    <p class="demo-description">
-      展示背景遮罩客製化、Teleport 功能等進階特性。包含多種背景點擊行為和 z-index 解決方案。
-    </p>
-
     <div class="demo-buttons">
       <button class="demo-btn" @click="showDefaultBackdrop">
         預設背景（不可點擊關閉）
@@ -23,21 +18,8 @@
       </button>
 
       <button class="demo-btn teleport-btn" @click="showTeleportToBody">
-        🚀 Teleport 到 body
+        Teleport 到 body
       </button>
-    </div>
-
-    <div class="teleport-info">
-      <h4>Teleport 功能說明</h4>
-      <p>
-        Teleport 功能可以將對話框渲染到指定的 DOM 容器中，有效解決 z-index 層級衝突問題。
-        除了 <code>body</code> 外，也可以使用 CSS 選擇器指定其他容器，例如：
-      </p>
-      <ul>
-        <li><code>teleport: "#app"</code> - 渲染到 id 為 app 的元素</li>
-        <li><code>teleport: ".modal-container"</code> - 渲染到 class 為 modal-container 的元素</li>
-        <li><code>teleport: "body"</code> 或 <code>teleport: true</code> - 渲染到 body（推薦）</li>
-      </ul>
     </div>
   </div>
 </template>
@@ -120,8 +102,8 @@ function showBackdropWithCallback() {
       blur: '8px',
       closeOnClick: true, // 允許點擊背景關閉
       onBackdropClick: () => {
-        console.warn('🎯 背景被點擊了！執行自定義回調函數')
-        console.warn('✅ 背景點擊回調執行成功！')
+        console.warn('背景被點擊了！執行自定義回調函數')
+        console.warn('背景點擊回調執行成功！')
       },
     },
   })
@@ -172,7 +154,7 @@ function showTeleportToBody() {
       blur: '5px',
       closeOnClick: true,
       onBackdropClick: () => {
-        console.warn('🚀 Teleport 對話框背景被點擊')
+        console.warn('Teleport 對話框背景被點擊')
       },
     },
     teleport: true, // 傳送到 body
@@ -216,11 +198,6 @@ function showTeleportToBody() {
 .teleport-btn {
   background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
   position: relative;
-}
-
-.teleport-btn::before {
-  content: '🚀 ';
-  margin-right: 2px;
 }
 
 .demo-description {

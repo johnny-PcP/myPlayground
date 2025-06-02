@@ -1,16 +1,17 @@
 <template>
-  <div class="flex flex-col gap-4 w-full border border-gray-300 p-6 text-black">
-        <nested-fuzzy-search
+  <div class="flex flex-col gap-4 w-full border border-gray-300 p-6 ">
+    <span>輸入: vue, react等文字（並嘗試打錯幾個字母）</span>
+    <nested-fuzzy-search
       ref="searchComponent"
       v-model="internalSearchQuery"
       class=" rounded p-4 bg-gray-300"
       :data="data"
-      :matchPrecision="threshold"
-      :autoEmitResults="false"
+      :match-precision="threshold"
+      :auto-emit-results="false"
       placeholder="輸入後點擊搜尋..."
       @search="handleSearchResults"
     />
-    
+
     <!-- matchPrecision 控制滑桿 -->
     <div class="flex flex-col gap-2 p-4 bg-blue-50 rounded border">
       <div class="flex items-center justify-between">
@@ -28,7 +29,7 @@
         max="1"
         step="0.1"
         class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
-      />
+      >
       <div class="flex justify-between text-xs text-gray-400">
         <span>0.1 (寬鬆)</span>
         <span>1.0 (嚴格)</span>
@@ -38,14 +39,14 @@
     <!-- 搜尋輸入框和按鈕 -->
     <div class="flex  justify-end gap-4">
       <button
-        @click="performSearch"
         class="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+        @click="performSearch"
       >
         搜尋
       </button>
       <button
-        @click="clearSearch"
         class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
+        @click="clearSearch"
       >
         清空
       </button>
@@ -65,7 +66,7 @@
           <h4 class="font-bold text-black mb-2">
             {{ item.title }}
           </h4>
-          
+
           <!-- 關鍵字標籤 -->
           <div class="flex flex-wrap gap-1 mb-2">
             <span
@@ -76,13 +77,13 @@
               {{ keyword }}
             </span>
           </div>
-          
+
           <!-- 作者資訊 -->
           <div class="text-sm text-gray-600 mb-2">
             <span class="font-medium">作者：</span>{{ item.author.name }}
             <span class="text-gray-400 ml-2">({{ item.author.email }})</span>
           </div>
-          
+
           <!-- 章節資訊 -->
           <div class="text-xs text-gray-500">
             <span class="font-medium">章節：</span>
@@ -105,7 +106,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, nextTick } from 'vue'
+import { nextTick, ref, watch } from 'vue'
 import NestedFuzzySearch from '../nested-fuzzy-search.vue'
 
 // 範例資料
@@ -126,144 +127,144 @@ interface DataItem {
 const data: DataItem[] = [
   {
     id: 1,
-    title: 'Vue.js 完整開發指南',
-    keywords: ['Vue', 'JavaScript', '前端', 'SPA'],
+    title: 'Complete Vue.js Development Guide',
+    keywords: ['Vue', 'JavaScript', 'Frontend', 'SPA'],
     author: {
-      name: '張小明',
-      email: 'zhang@example.com'
+      name: 'John Smith',
+      email: 'john@example.com',
     },
     chapters: [
-      { name: '基礎概念', duration: 120 },
+      { name: 'Basic Concepts', duration: 120 },
       { name: 'Composition API', duration: 180 },
-      { name: '狀態管理', duration: 150 }
-    ]
+      { name: 'State Management', duration: 150 },
+    ],
   },
   {
     id: 2,
-    title: 'React 效能優化實戰',
-    keywords: ['React', 'Performance', '優化'],
+    title: 'React Performance Optimization',
+    keywords: ['React', 'Performance', 'Optimization'],
     author: {
-      name: '李美華',
-      email: 'li@example.com'
+      name: 'Emily Johnson',
+      email: 'emily@example.com',
     },
     chapters: [
-      { name: 'Virtual DOM 原理', duration: 90 },
-      { name: 'Memo 與 Callback', duration: 110 },
-      { name: '代碼分割', duration: 100 }
-    ]
+      { name: 'Virtual DOM Principles', duration: 90 },
+      { name: 'Memo and Callback', duration: 110 },
+      { name: 'Code Splitting', duration: 100 },
+    ],
   },
   {
     id: 3,
-    title: 'Node.js 後端開發',
-    keywords: ['Node.js', 'Express', 'API', '後端'],
+    title: 'Node.js Backend Development',
+    keywords: ['Node.js', 'Express', 'API', 'Backend'],
     author: {
-      name: '王大安',
-      email: 'wang@example.com'
+      name: 'Michael Brown',
+      email: 'michael@example.com',
     },
     chapters: [
-      { name: 'Express 框架', duration: 140 },
-      { name: 'MongoDB 整合', duration: 160 },
-      { name: 'Authentication', duration: 130 }
-    ]
+      { name: 'Express Framework', duration: 140 },
+      { name: 'MongoDB Integration', duration: 160 },
+      { name: 'Authentication', duration: 130 },
+    ],
   },
   {
     id: 4,
-    title: 'Python 資料科學',
-    keywords: ['Python', '資料分析', 'Pandas', 'NumPy'],
+    title: 'Python Data Science',
+    keywords: ['Python', 'Data Analysis', 'Pandas', 'NumPy'],
     author: {
-      name: '陳志強',
-      email: 'chen@example.com'
+      name: 'Sarah Wilson',
+      email: 'sarah@example.com',
     },
     chapters: [
-      { name: 'Pandas 基礎', duration: 200 },
-      { name: '資料視覺化', duration: 170 },
-      { name: '機器學習入門', duration: 220 }
-    ]
+      { name: 'Pandas Basics', duration: 200 },
+      { name: 'Data Visualization', duration: 170 },
+      { name: 'Machine Learning Intro', duration: 220 },
+    ],
   },
   {
     id: 5,
-    title: 'Docker 容器化部署',
-    keywords: ['Docker', 'DevOps', '容器', '部署'],
+    title: 'Docker Containerization',
+    keywords: ['Docker', 'DevOps', 'Container', 'Deployment'],
     author: {
-      name: '林雅婷',
-      email: 'lin@example.com'
+      name: 'David Lee',
+      email: 'david@example.com',
     },
     chapters: [
-      { name: 'Docker 基礎', duration: 80 },
-      { name: 'Dockerfile 撰寫', duration: 95 },
-      { name: 'Docker Compose', duration: 120 }
-    ]
+      { name: 'Docker Basics', duration: 80 },
+      { name: 'Dockerfile Writing', duration: 95 },
+      { name: 'Docker Compose', duration: 120 },
+    ],
   },
   {
     id: 6,
-    title: 'TypeScript 進階開發',
-    keywords: ['TypeScript', '型別', '進階', 'JavaScript'],
+    title: 'Advanced TypeScript Development',
+    keywords: ['TypeScript', 'Types', 'Advanced', 'JavaScript'],
     author: {
-      name: '吳建宏',
-      email: 'wu@example.com'
+      name: 'Alex Chen',
+      email: 'alex@example.com',
     },
     chapters: [
-      { name: '型別系統', duration: 110 },
-      { name: '泛型程式設計', duration: 140 },
-      { name: '裝飾器模式', duration: 90 }
-    ]
+      { name: 'Type System', duration: 110 },
+      { name: 'Generic Programming', duration: 140 },
+      { name: 'Decorator Pattern', duration: 90 },
+    ],
   },
   {
     id: 7,
-    title: 'Swift iOS 應用開發',
-    keywords: ['Swift', 'iOS', '行動應用', 'UIKit'],
+    title: 'Swift iOS App Development',
+    keywords: ['Swift', 'iOS', 'Mobile App', 'UIKit'],
     author: {
-      name: '黃淑芬',
-      email: 'huang@example.com'
+      name: 'Lisa Garcia',
+      email: 'lisa@example.com',
     },
     chapters: [
-      { name: 'Swift 語法', duration: 160 },
-      { name: 'UIKit 元件', duration: 180 },
-      { name: '資料持久化', duration: 120 }
-    ]
+      { name: 'Swift Syntax', duration: 160 },
+      { name: 'UIKit Components', duration: 180 },
+      { name: 'Data Persistence', duration: 120 },
+    ],
   },
   {
     id: 8,
-    title: 'Kubernetes 集群管理',
-    keywords: ['Kubernetes', 'K8s', '容器編排', 'DevOps'],
+    title: 'Kubernetes Cluster Management',
+    keywords: ['Kubernetes', 'K8s', 'Orchestration', 'DevOps'],
     author: {
-      name: '許志明',
-      email: 'hsu@example.com'
+      name: 'Robert Martinez',
+      email: 'robert@example.com',
     },
     chapters: [
-      { name: '基本概念', duration: 100 },
-      { name: 'Pod 與 Service', duration: 150 },
-      { name: '部署策略', duration: 170 }
-    ]
+      { name: 'Basic Concepts', duration: 100 },
+      { name: 'Pods and Services', duration: 150 },
+      { name: 'Deployment Strategies', duration: 170 },
+    ],
   },
   {
     id: 9,
-    title: '機器學習演算法',
-    keywords: ['AI', '機器學習', '演算法', 'TensorFlow'],
+    title: 'Machine Learning Algorithms',
+    keywords: ['AI', 'Machine Learning', 'Algorithms', 'TensorFlow'],
     author: {
-      name: '劉小敏',
-      email: 'liu@example.com'
+      name: 'Amy Zhang',
+      email: 'amy@example.com',
     },
     chapters: [
-      { name: '監督式學習', duration: 240 },
-      { name: '神經網路', duration: 200 },
-      { name: '深度學習', duration: 280 }
-    ]
+      { name: 'Supervised Learning', duration: 240 },
+      { name: 'Neural Networks', duration: 200 },
+      { name: 'Deep Learning', duration: 280 },
+    ],
   },
   {
     id: 10,
-    title: 'Web 安全防護',
-    keywords: ['安全', 'HTTPS', 'XSS', 'CSRF'],
+    title: 'Web Security Protection',
+    keywords: ['Security', 'HTTPS', 'XSS', 'CSRF'],
     author: {
-      name: '鄭大衛',
-      email: 'zheng@example.com'
+      name: 'Kevin Anderson',
+      email: 'kevin@example.com',
     },
     chapters: [
-      { name: '常見攻擊手法', duration: 130 },
-      { name: '防護機制', duration: 150 },
-      { name: '安全測試', duration: 110 }
-    ]
-  }
+      { name: 'Common Attack Methods', duration: 130 },
+      { name: 'Defense Mechanisms', duration: 150 },
+      { name: 'Security Testing', duration: 110 },
+    ],
+  },
 ]
 
 // 搜尋相關狀態
@@ -271,9 +272,8 @@ const searchComponent = ref()
 const internalSearchQuery = ref('')
 const currentSearchQuery = ref('')
 const searchResults = ref<DataItem[]>([])
-const threshold = ref(0.1) 
+const threshold = ref(0.1)
 const hasSearched = ref(false)
-
 
 // 執行搜尋
 function performSearch() {
@@ -284,7 +284,6 @@ function performSearch() {
     searchComponent.value?.triggerSearch()
   }
 }
-
 
 // 清空搜尋
 function clearSearch() {
