@@ -7,7 +7,6 @@
   />
 
   <dialog
-    :id="dialogId"
     class="dialog"
     @click.stop
   >
@@ -65,7 +64,7 @@
 <script setup>
 import { computed } from 'vue'
 
-const props = defineProps(['dialogOption', 'dialogId'])
+const props = defineProps(['dialogOption'])
 const emit = defineEmits(['confirm', 'cancel'])
 
 // 計算背景樣式
@@ -100,8 +99,6 @@ function handleBackdropClick() {
   width: 100vw;
   height: 100vh;
   z-index: 1000;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
   cursor: pointer;
   /* 確保能接收點擊事件 */
   pointer-events: all;

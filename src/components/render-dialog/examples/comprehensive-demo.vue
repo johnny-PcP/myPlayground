@@ -16,10 +16,6 @@
       <button class="demo-btn" @click="showNoBackdrop">
         無背景遮罩
       </button>
-
-      <button class="demo-btn teleport-btn" @click="showTeleportToBody">
-        Teleport 到 body
-      </button>
     </div>
   </div>
 </template>
@@ -126,40 +122,6 @@ function showNoBackdrop() {
     backdrop: false,
   })
 }
-
-// Teleport 到 body 範例
-function showTeleportToBody() {
-  _dialog.open({
-    title: '🚀 Teleport 到 body',
-    content: [
-      '這個對話框使用 Teleport 傳送到 document.body',
-      '可以有效避免 z-index 層級衝突',
-      '對話框會脫離原本的 DOM 層級結構',
-      '',
-      '💡 提示：也可以指定其他標籤作為傳送目標',
-      '例如：teleport: "#modal-container"',
-      '或：teleport: ".dialog-wrapper"',
-    ],
-    confirm: {
-      btnName: '了解了',
-      onComplete: () => {
-        console.warn('🚀 Teleport 對話框已關閉')
-      },
-    },
-    cancel: {
-      btnName: '取消',
-    },
-    backdrop: {
-      color: 'rgba(16, 185, 129, 0.4)', // 淡綠色
-      blur: '5px',
-      closeOnClick: true,
-      onBackdropClick: () => {
-        console.warn('Teleport 對話框背景被點擊')
-      },
-    },
-    teleport: true, // 傳送到 body
-  })
-}
 </script>
 
 <style scoped>
@@ -195,11 +157,6 @@ function showTeleportToBody() {
   transform: translateY(0);
 }
 
-.teleport-btn {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
-  position: relative;
-}
-
 .demo-description {
   color: #666;
   margin-bottom: 16px;
@@ -211,45 +168,5 @@ h3 {
   margin-bottom: 16px;
   font-size: 18px;
   font-weight: 600;
-}
-
-.teleport-info {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  padding: 20px;
-  margin-top: 24px;
-}
-
-.teleport-info h4 {
-  color: #2d3748;
-  margin-bottom: 12px;
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.teleport-info p {
-  color: #666;
-  line-height: 1.6;
-  margin-bottom: 12px;
-}
-
-.teleport-info ul {
-  margin: 0;
-  padding-left: 20px;
-}
-
-.teleport-info li {
-  color: #666;
-  line-height: 1.6;
-  margin-bottom: 8px;
-}
-
-.teleport-info code {
-  background: #e2e8f0;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 13px;
-  color: #2d3748;
 }
 </style>

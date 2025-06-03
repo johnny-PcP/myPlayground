@@ -1,4 +1,4 @@
-import { h, nextTick, render, Teleport } from 'vue'
+import { h, nextTick, render } from 'vue'
 import DialogComponent from './render-dialog.vue'
 
 export interface ButtonConfig {
@@ -24,34 +24,24 @@ export interface DialogOptions {
   cancel?: ButtonConfig;
   /** 背景遮罩配置，設為 false 則不顯示背景 */
   backdrop?: false | BackdropOptions;
-  /** Teleport 目標，true 表示傳送到 body，string 表示自定義 CSS 選擇器 */
-  teleport?: boolean | string;
 }
 
-export interface UseDialogOptions {
-  /** 預設的 Teleport 設定，true 表示傳送到 body，string 表示自定義 CSS 選擇器 */
-  teleport?: boolean | string;
-}
-
-export function useDialog(options: UseDialogOptions = {}) {
+export function useDialog() {
   let container: HTMLElement | null = null
-  let dialogElement: HTMLDialogElement | null = null
   let isOpen = false
 
-  function checkPortalContainer(target: string): HTMLElement {
-    // 如果是 body，直接返回
-    if (target === 'body') {
-      return document.body
-    }
-
-    // 嘗試找到指定的元素，找不到就拋出錯誤
-    const existing = document.querySelector(target) as HTMLElement
-    if (existing) {
-      return existing
-    }
-
-    // 找不到就拋出錯誤，讓用戶知道
-    throw new Error(`Teleport target "${target}" not found`)
+  function createDialogComponent(dialogOptions: DialogOptions) {
+    return h(DialogComponent, {
+      dialogOption: dialogOptions,
+      onConfirm: () => {
+        dialogOptions.confirm?.onComplete?.()
+        close()
+      },
+      onCancel: () => {
+        dialogOptions.cancel?.onComplete?.()
+        close()
+      },
+    })
   }
 
   function open(dialogOptions: DialogOptions) {
@@ -62,69 +52,19 @@ export function useDialog(options: UseDialogOptions = {}) {
 
     isOpen = true
 
-    // 決定 Teleport 目標：單次設定 > 全域設定 > 關閉
-    const teleportTarget = dialogOptions.teleport ?? options.teleport
-
     // 創建容器
     container = document.createElement('div')
-    // 為容器添加唯一 ID，便於後續識別
-    const containerId = `dialog-container-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
-    container.id = containerId
     document.body.appendChild(container)
 
-    let vNode
-
-    if (teleportTarget) {
-      // 確定傳送目標
-      const target = teleportTarget === true ? 'body' : teleportTarget as string
-      const portalElement = target === 'body' ? document.body : checkPortalContainer(target)
-
-      // 使用 Teleport 包裝組件
-      vNode = h(Teleport, {
-        to: portalElement,
-      }, [
-        h(DialogComponent, {
-          dialogOption: dialogOptions,
-          onConfirm: () => {
-            dialogOptions.confirm?.onComplete?.()
-            close()
-          },
-          onCancel: () => {
-            dialogOptions.cancel?.onComplete?.()
-            close()
-          },
-        }),
-      ])
-    }
-    else {
-      // 不使用 Teleport，直接渲染
-      vNode = h(DialogComponent, {
-        dialogOption: dialogOptions,
-        onConfirm: () => {
-          dialogOptions.confirm?.onComplete?.()
-          close()
-        },
-        onCancel: () => {
-          dialogOptions.cancel?.onComplete?.()
-          close()
-        },
-      })
-    }
+    // 創建 VNode
+    const dialogComponent = createDialogComponent(dialogOptions)
 
     // 渲染到容器
-    render(vNode, container)
+    render(dialogComponent, container)
 
     // 顯示對話框 - 使用 nextTick 確保 DOM 更新完成
     nextTick(() => {
-      if (teleportTarget) {
-        // 使用 Teleport 時，dialog 會被移動到目標容器
-        const targetContainer = teleportTarget === true ? document.body : checkPortalContainer(teleportTarget as string)
-        dialogElement = targetContainer.querySelector('dialog:last-of-type')
-      }
-      else {
-        // 不使用 Teleport 時，dialog 在原始容器中
-        dialogElement = container?.querySelector('dialog') || null
-      }
+      const dialogElement = container?.querySelector('dialog') as HTMLDialogElement
 
       if (dialogElement) {
         dialogElement.style.display = 'block'

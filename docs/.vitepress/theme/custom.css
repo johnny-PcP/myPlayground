@@ -13,3 +13,15 @@ body {
   transition-duration: 0.1s;
   transform: scale(0.98);
 }
+
+
+
+/* for mermaid */
+.mermaid .labelBkg {
+    background-color: transparent !important;
+}
+
+.mermaid .edgeLabel p {
+    background-color: transparent !important;
+    color: inherit !important;
+}
