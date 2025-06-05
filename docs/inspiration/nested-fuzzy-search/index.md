@@ -24,7 +24,7 @@ import BtnUsage from '../../../src/components/nested-fuzzy-search/examples/btn-u
 
 假設我們有一個物件資料結構如下：
 ```typescript
-interface DataItem {
+interface _DataItem {
   id: number;
   title: string;
   keywords: string[];

@@ -9,7 +9,13 @@
     "test:e2e": "playwright test",
     "test:e2e-ui": "playwright test --ui",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "clean:dist": "rm -rf docs/.vitepress/dist",
+    "check": "npm run lint && npm run docs:build && echo '✅ All checks passed!'",
+    "deploy": "node deploy.js",
+    "deploy:safe": "node deploy.js",
+    "deploy:husky": "./scripts/husky-deploy.sh",
+    "prepare": "husky"
   },
   "dependencies": {
     "remeda": "^2.21.4",
@@ -28,6 +34,7 @@
     "autoprefixer": "^10.4.21",
     "eslint": "^9.26.0",
     "happy-dom": "^17.4.6",
+    "husky": "^9.1.7",
     "mermaid": "^11.6.0",
     "postcss": "^8.5.3",
     "sass": "^1.87.0",

@@ -17,8 +17,8 @@
 </template>
 
 <script setup lang="ts">
-// 引入動畫函數參數和過渡名稱類型
-import type { AnimeFuncParam, TransitionName } from './transition-provider'
+// 引入動畫函數參數類型
+import type { AnimeFuncParam } from './transition-provider'
 // 引入 anime.js 動畫庫
 import anime from 'animejs'
 // 引入 remeda 工具函數

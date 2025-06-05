@@ -1,0 +1,69 @@
+#!/usr/bin/env sh
+# =============================================================================
+# Git Pre-Push Hook (Husky 管理)
+# =============================================================================
+# 此腳本會在執行 `git push` 之前自動運行
+# 目的：根據不同分支執行不同程度的檢查，確保推送的程式碼能夠正常運作
+
+# 獲取當前分支的名稱
+# git rev-parse --abbrev-ref HEAD 會回傳當前分支的名稱
+current_branch=$(git rev-parse --abbrev-ref HEAD)
+
+# 顯示開始訊息，告知使用者正在對哪個分支執行檢查
+echo "🚀 正在對分支 $current_branch 執行推送前檢查"
+
+# 如果是推送到 main 分支，執行完整檢查
+# main 分支是生產環境，需要最嚴格的檢查
+if [ "$current_branch" = "main" ]; then
+    # 告知使用者檢測到 main 分支推送，將執行完整驗證
+    echo "🔍 偵測到推送至 main 分支 - 正在執行建置驗證..."
+    
+    # 執行完整檢查（包含 lint 和 build）
+    # 使用 package.json 中定義的 check 腳本
+    npm run check
+    
+    # 檢查建置是否成功
+    if [ $? -ne 0 ]; then
+        # 如果建置失敗，顯示錯誤訊息並阻止推送
+        echo "❌ 建置驗證失敗！無法推送至 main 分支。"
+        echo "💡 請修正問題後再次嘗試。"
+        # 以退出碼 1 結束腳本，這會阻止 git push 繼續執行
+        exit 1
+    fi
+    
+    # 如果建置成功，顯示成功訊息
+    echo "✅ 建置驗證成功！可以安全推送至 main 分支。"
+    
+    # 自動清理建置產生的 dist 檔案
+    # 避免將建置產物意外加入到版本控制中
+    echo "🧹 正在清理 dist 檔案..."
+    npm run clean:dist
+    
+    # 檢查是否有因為清理產生的檔案變更
+    # git status --porcelain 會列出工作區的變更，如果有內容表示有變更
+    if [ -n "$(git status --porcelain)" ]; then
+        # 如果有變更，自動加入暫存區並提交
+        git add .
+        git commit -m "chore: clean dist files before deploy"
+    fi
+fi
+
+# 對 dev 分支的檢查（較輕量）
+# dev 分支是開發環境，只需要基本的程式碼風格檢查
+if [ "$current_branch" = "dev" ]; then
+    # 告知使用者正在對 dev 分支執行基本檢查
+    echo "🔍 正在對 dev 分支執行基本檢查..."
+    
+    # 只執行 ESLint 檢查，不執行耗時的建置
+    npm run lint
+    
+    # 檢查 lint 是否通過
+    if [ $? -ne 0 ]; then
+        # 如果 lint 失敗，顯示錯誤訊息並阻止推送
+        echo "❌ dev 分支程式碼檢查失敗！"
+        exit 1
+    fi
+fi
+
+# 如果所有檢查都通過，顯示完成訊息
+echo "✅ 推送前檢查完成！"

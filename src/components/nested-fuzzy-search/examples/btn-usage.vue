@@ -106,7 +106,7 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 import NestedFuzzySearch from '../nested-fuzzy-search.vue'
 
 // 範例資料
