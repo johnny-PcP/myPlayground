@@ -16,6 +16,7 @@
           class="relative flex min-h-[75px] flex-1 items-start justify-start break-all rounded-md bg-white/70 pb-2 pl-1.5 pr-8 pt-4 font-bold"
         >
           <p>{{ tip.content }}</p>
+          <div class="" />
           <button
             class="absolute right-1 top-0.5 font-bold text-black hover:text-red-500 transition-colors"
             @click.prevent="$emit('removeTip', tip.id)"
