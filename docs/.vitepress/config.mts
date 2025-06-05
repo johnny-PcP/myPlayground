@@ -6,6 +6,8 @@ export default withMermaid(
   defineConfig({
     title: 'My Playground',
     description: '自我練習與想法實踐的空間',
+    // 如果部署到 https://username.github.io/myPlayground，需要設置 base
+    base: '/myPlayground/',
     head: [
       [
         'link',
@@ -55,30 +57,20 @@ export default withMermaid(
           text: '元件列表',
           link: '/components/',
           items: [
-            {
-              text: '文字輸入',
-              items: [
-                { text: '巢狀模糊搜尋器', link: '/inspiration/nested-fuzzy-search/' },
-              ],
-            },
-            {
-              text: '互動組件',
-              items: [
-                { text: '即時渲染通知', link: '/inspiration/render-dialog/' },
-              ],
-            },
+            { text: '巢狀模糊搜尋器', link: '/inspiration/nested-fuzzy-search/' },
+            { text: '即時渲染通知', link: '/inspiration/render-dialog/' },
           ],
         },
-        {
-          text: '學習之道',
-          items: [
-            { text: '調皮的按鈕', link: '/learning/btn-naughty/' },
-            {
-              text: '逐字轉場',
-              link: '/learning/text-characters-transition/',
-            },
-          ],
-        },
+        // {
+        //   text: '學習之道',
+        //   items: [
+        //     { text: '調皮的按鈕', link: '/learning/btn-naughty/' },
+        //     {
+        //       text: '逐字轉場',
+        //       link: '/learning/text-characters-transition/',
+        //     },
+        //   ],
+        // },
         {
           text: '其他',
           items: [{ text: '安裝', link: '/install' }],

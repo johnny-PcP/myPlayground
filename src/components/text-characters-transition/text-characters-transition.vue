@@ -29,7 +29,7 @@ import { computed, onBeforeUnmount, onMounted, watch } from 'vue'
 
 // 引入過渡效果提供者
 import { transitionProvider } from './transition-provider'
-// #region Props
+
 interface Props {
   /** 是否顯示 */
   visible?: boolean;
@@ -56,8 +56,8 @@ interface Props {
   /** 離開動畫設定 */
   leave?: AnimeFuncParam;
 }
-// #endregion Props
 // 定義 props 並設置默認值
+// region Props
 const props = withDefaults(defineProps<Props>(), {
   visible: true,
   label: '',
@@ -65,6 +65,7 @@ const props = withDefaults(defineProps<Props>(), {
   splitter: undefined,
   name: 'fade',
 })
+// #endregion Props
 
 // #region Emits
 // 定義事件發射器

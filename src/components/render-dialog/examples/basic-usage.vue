@@ -1,5 +1,5 @@
 <template>
-  <div class="basic-usage-demo">
+  <div class="flex flex-col gap-4 w-full border border-gray-300 p-6">
     <div class="demo-buttons">
       <button class="demo-btn" @click="openBasicDialog">
         基本範例
@@ -72,15 +72,10 @@ function openClickableDialog() {
 </script>
 
 <style scoped>
-.basic-usage-demo {
-  margin-bottom: 32px;
-}
-
 .demo-buttons {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
-  margin-top: 16px;
 }
 
 .demo-btn {

@@ -95,11 +95,3 @@ import CustomTransition from '../../../src/components/text-characters-transition
 ### Emits
 
 <<< ../../../src/components/text-characters-transition/text-characters-transition.vue/#Emits
-
-### Methods
-
-<<< ../../../src/components/text-characters-transition/text-characters-transition.vue/#Methods
-
-```
-
-```

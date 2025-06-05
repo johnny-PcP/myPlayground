@@ -1,8 +1,9 @@
 # 此工作流程名為 "Playwright 測試"
 name: Playwright Tests
 
-# 當推送或拉取請求到 main 或 master 分支時觸發此工作流程
-# on:
+# 僅在手動觸發時執行此工作流程
+on:
+  workflow_dispatch: # 允許手動觸發
 # push:
 # branches: [main, master]
 # pull_request:

@@ -1,5 +1,5 @@
 <template>
-  <div class="comprehensive-demo">
+  <div class="flex flex-col gap-4 w-full border border-gray-300 p-6">
     <div class="demo-buttons">
       <button class="demo-btn" @click="showDefaultBackdrop">
         預設背景（不可點擊關閉）
@@ -133,7 +133,6 @@ function showNoBackdrop() {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
-  margin-bottom: 24px;
 }
 
 .demo-btn {

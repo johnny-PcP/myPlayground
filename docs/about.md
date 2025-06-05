@@ -20,7 +20,7 @@ const members = [
 
 ## 如何使用本站 ?
 
-### <span style="color: #ff5722;">對你來說：拷貝即用</span>
+### <span style="color: #ff5722;">拷貝即用</span>
 
 本站會盡量將各式組件，設計成能夠拷貝即用，您可直接閱覽[元件列表](./components/)來尋找需要的元件。
 ::: tip
@@ -28,7 +28,7 @@ const members = [
 您也可以嘗試在上方搜尋框輸入關鍵字搜索。
 
 :::
-
+<!--
 ### <span style="color: #4caf50;">對我來說： 目的分類</span>
 
 根據學習目的不同，本站的組件區分：
@@ -40,13 +40,7 @@ const members = [
 
 每個組件詳細頁面的後半部將紀錄我對該組件的構建心得（類似筆記）。
 
-:::
-
-## 特別感謝
-
-鱈魚大的[Chill Component](https://gitlab.com/side_project/chill-component)專案，給予本站非常多的靈感，對動畫元件有興趣的，非常推薦逛逛他[網站](https://chillcomponent.codlin.me/)。
-
-<VPTeamMembers size="small" :members />
+::: -->
 
 ## About Me - [Linked-In](https://www.linkedin.com/in/johnny-chen-51b61427a)
 
@@ -61,13 +55,28 @@ const members = [
 
 ::: details 技能樹
 
-- **前端框架**: Vue.js
-- **渲染框架**: Nuxt.js(SSR), Astro(SSG)
-- **後端框架**: Laravel, Nova
-- **API**: GraphQL (GQL)
-- **版型與樣式**: Tailwind CSS, Bootstrap
-- **容器**: Docker
-- **自動化部署**: GitHub Actions
+**前端技術**
+
+- Vue.js / Nuxt.js
+- Astro.js
+- TypeScript
+- TailwindCSS
+
+**後端技術**
+
+- PHP / Laravel
+- RESTful API 設計
+- 資料庫架構規劃（MySQL）
+
+**測試工具**
+
+- Vitest
+- Playwright
+
+**部署與環境管理**
+
+- Docker（開發環境容器化）
+- Google Cloud Platform（基本部署與操作）
 
 :::
 ::: info
@@ -76,3 +85,8 @@ const members = [
 - 有任何問題或建議，歡迎以 [e-mail](mailto:johnnypcp0313@gmail.com) 聯繫我。
 
 :::
+
+## 特別感謝
+
+感謝鱈魚大的[Chill Component](https://gitlab.com/side_project/chill-component)專案，給予本站靈感。
+<VPTeamMembers size="small" :members />

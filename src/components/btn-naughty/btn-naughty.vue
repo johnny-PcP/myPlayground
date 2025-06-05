@@ -28,7 +28,6 @@
 </template>
 
 <script setup lang="ts">
-// #region CSSProperties
 import type { CSSProperties } from 'vue'
 import {
   throttleFilter,
@@ -36,34 +35,7 @@ import {
   useMouseInElement,
 } from '@vueuse/core'
 import { computed, reactive, ref, useAttrs, watch } from 'vue'
-// #endregion Props
-const props = withDefaults(defineProps<Props>(), {
-  label: '按鈕預設文字',
-  disabled: false,
-  zIndex: undefined,
-  maxDistanceMultiple: 5,
-  tabindex: undefined,
-})
-// #region Emits
-const emit = defineEmits<{
-  (e: 'click'): void;
-  (e: 'run'): void;
-  (e: 'back'): void;
-}>()
-// #endregion CSSProperties
 
-// #region Slots
-defineSlots<{
-  /** 按鈕 */
-  default?: () => unknown;
-  /** 拓印 */
-  rubbing?: () => unknown;
-}>()
-// #endregion Slots
-
-const attrs = useAttrs()
-
-// #region Props
 interface Props {
   /** 按鈕內文字 */
   label?: string;
@@ -76,8 +48,34 @@ interface Props {
   /** 同 html tabindex */
   tabindex?: number | string;
 }
+// #region Props
+const props = withDefaults(defineProps<Props>(), {
+  label: '按鈕預設文字',
+  disabled: false,
+  zIndex: undefined,
+  maxDistanceMultiple: 5,
+  tabindex: undefined,
+})
+// #endregion Props
 
+// #region Emits
+const emit = defineEmits<{
+  (e: 'click'): void;
+  (e: 'run'): void;
+  (e: 'back'): void;
+}>()
 // #endregion Emits
+
+// #region Slots
+defineSlots<{
+  /** 按鈕 */
+  default?: () => unknown;
+  /** 拓印 */
+  rubbing?: () => unknown;
+}>()
+// #endregion Slots
+
+const attrs = useAttrs()
 
 // defineOptions({
 //   inheritAttrs: false
@@ -85,8 +83,8 @@ interface Props {
 
 const carrierRef = ref<HTMLDivElement>()
 
-/** throttleFilter 用來降低偵測滑鼠變化的更新速度，可以提升效能
- *
+/**
+ * throttleFilter 用來降低偵測滑鼠變化的更新速度，可以提升效能
  */
 // #region throttleFilter
 const mouseInElement = reactive(
