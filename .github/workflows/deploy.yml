@@ -1,37 +1,76 @@
+# 工作流程名稱，會顯示在 GitHub Actions 頁面
 name: Deploy to GitHub Pages
 
+# 定義觸發工作流程的條件
 on:
+  # 當推送到 main 分支時觸發
   push:
     branches: [main]
+  # 允許手動觸發工作流程
   workflow_dispatch:
 
+# 設定 GITHUB_TOKEN 的權限，限制權限範圍提高安全性
+permissions:
+  contents: read # 讀取儲存庫內容
+  pages: write # 寫入 GitHub Pages
+  id-token: write # 寫入身份令牌，用於 OIDC 身份驗證
+
+# 並發控制設定，確保部署的一致性
+concurrency:
+  group: pages # 並發組名稱
+  cancel-in-progress: false # 不取消正在進行的部署
+
+# 定義工作任務
 jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-
+  # 構建任務：編譯和準備網站內容
+  build:
+    runs-on: ubuntu-latest # 使用最新版本的 Ubuntu 運行器
     steps:
+      # 步驟 1：檢出程式碼
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4 # 使用官方檢出動作
         with:
-          fetch-depth: 0
+          fetch-depth: 0 # 獲取完整的 Git 歷史記錄
 
+      # 步驟 2：設定 Node.js 環境
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v4 # 使用官方 Node.js 設定動作
         with:
-          node-version: lts/*
-          cache: npm
+          node-version: lts/* # 使用最新的 LTS 版本
+          cache: npm # 快取 npm 依賴以加速構建
 
+      # 步驟 3：配置 GitHub Pages 設定
+      - name: Setup Pages
+        uses: actions/configure-pages@v4 # 自動配置 Pages 相關設定
+
+      # 步驟 4：安裝專案依賴
       - name: Install dependencies
-        run: npm ci
+        run: npm ci # 使用 ci 命令進行乾淨安裝，適合 CI 環境
 
+      # 步驟 5：執行程式碼檢查
       - name: Lint code
-        run: npm run lint
+        run: npm run lint # 執行 ESLint 檢查程式碼品質
 
+      # 步驟 6：構建 VitePress 網站
       - name: Build VitePress site
-        run: npm run docs:build
+        run: npm run docs:build # 執行構建命令，生成靜態網站
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      # 步驟 7：上傳構建產物
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3 # 上傳構建結果到 GitHub
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: docs/.vitepress/dist
+          path: docs/.vitepress/dist # 指定上傳的目錄路徑
+
+  # 部署任務：將構建好的網站部署到 GitHub Pages
+  deploy:
+    # 設定部署環境資訊
+    environment:
+      name: github-pages # 環境名稱
+      url: ${{ steps.deployment.outputs.page_url }} # 部署後的網站 URL
+    needs: build # 依賴於 build 任務完成
+    runs-on: ubuntu-latest # 使用最新版本的 Ubuntu 運行器
+    steps:
+      # 部署到 GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment # 設定步驟 ID 以供其他步驟引用
+        uses: actions/deploy-pages@v4 # 使用官方 Pages 部署動作
