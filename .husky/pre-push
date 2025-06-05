@@ -39,12 +39,15 @@ if [ "$current_branch" = "main" ]; then
     echo "🧹 正在清理 dist 檔案..."
     npm run clean:dist
     
-    # 檢查是否有因為清理產生的檔案變更
-    # git status --porcelain 會列出工作區的變更，如果有內容表示有變更
+    # 檢查工作目錄是否有未提交的變更
     if [ -n "$(git status --porcelain)" ]; then
-        # 如果有變更，自動加入暫存區並提交
-        git add .
-        git commit -m "chore: clean dist files before deploy"
+        echo "⚠️  警告：偵測到未提交的檔案變更"
+        echo "以下檔案有變更但尚未提交："
+        git status --short
+        echo ""
+        echo "💡 這些變更不會包含在此次推送中，但會保留在工作目錄中"
+        echo "📝 如果需要包含這些變更，請先執行 'git add' 和 'git commit'"
+        echo ""
     fi
 fi
 
@@ -53,6 +56,17 @@ fi
 if [ "$current_branch" = "dev" ]; then
     # 告知使用者正在對 dev 分支執行基本檢查
     echo "🔍 正在對 dev 分支執行基本檢查..."
+    
+    # 檢查是否有未提交的變更
+    if [ -n "$(git status --porcelain)" ]; then
+        echo "⚠️  警告：偵測到未提交的檔案變更"
+        echo "以下檔案有變更但尚未提交："
+        git status --short
+        echo ""
+        echo "💡 這些變更不會包含在此次推送中，但會保留在工作目錄中"
+        echo "📝 如果需要包含這些變更，請先執行 'git add' 和 'git commit'"
+        echo ""
+    fi
     
     # 只執行 ESLint 檢查，不執行耗時的建置
     npm run lint
