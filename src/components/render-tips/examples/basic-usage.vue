@@ -1,5 +1,5 @@
 <template>
-  <div class="basic-usage-demo">
+  <div class="flex flex-col gap-4 w-full border border-gray-300 p-6">
     <div class="demo-buttons">
       <button class="demo-btn" @click="showSuccessTip">
         成功提示
@@ -28,24 +28,33 @@ const tips = useRenderTips()
 function showSuccessTip() {
   tips.pushTip({
     content: '操作成功！資料已儲存',
-    textColor: 'text-green-700',
+    textColor: '#15803d',
     duration: 3000,
+    itemStyle: {
+      backgroundColor: '#f0fdf4',
+    },
   })
 }
 
 function showWarningTip() {
   tips.pushTip({
     content: '請注意：這個操作可能需要一些時間',
-    textColor: 'text-yellow-700',
+    textColor: '#b45309',
     duration: 4000,
+    itemStyle: {
+      backgroundColor: '#fffbeb',
+    },
   })
 }
 
 function showErrorTip() {
   tips.pushTip({
     content: '錯誤：無法連接到伺服器，請檢查網路連線',
-    textColor: 'text-red-700',
+    textColor: '#b91c1c',
     duration: 6000,
+    itemStyle: {
+      backgroundColor: '#fef2f2',
+    },
   })
 }
 
@@ -55,15 +64,10 @@ function clearAllTips() {
 </script>
 
 <style scoped>
-.basic-usage-demo {
-  margin-bottom: 32px;
-}
-
 .demo-buttons {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
-  margin-top: 16px;
 }
 
 .demo-btn {

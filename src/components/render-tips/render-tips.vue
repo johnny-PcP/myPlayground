@@ -1,6 +1,7 @@
 <template>
   <section
-    class="fixed bottom-[72px] right-3 z-[99] flex h-[40vh] w-[200px] flex-col-reverse items-end gap-y-3 overflow-y-auto md:bottom-3 md:w-[400px]"
+    class="tips-container"
+    :style="containerStyle"
     style="pointer-events: none"
   >
     <!-- 訊息 -->
@@ -8,17 +9,17 @@
       <div
         v-for="tip in tips"
         :key="tip.id"
-        :class="tip.textColor || 'text-black'"
-        class="flexCenter h-auto w-full rounded-md bg-themeOrange/70 p-2"
+        class="tip-item"
+        :style="{ ...tipItemStyle, ...tip.itemStyle }"
         style="pointer-events: auto"
       >
-        <div
-          class="relative flex min-h-[75px] flex-1 items-start justify-start break-all rounded-md bg-white/70 pb-2 pl-1.5 pr-8 pt-4 font-bold"
-        >
-          <p>{{ tip.content }}</p>
-          <div class="" />
+        <div class="tip-content" :style="{ ...tipContentStyle, ...tip.contentStyle }">
+          <p :style="{ color: tip.textColor || '#333333', ...tip.textStyle }">
+            {{ tip.content }}
+          </p>
           <button
-            class="absolute right-1 top-0.5 font-bold text-black hover:text-red-500 transition-colors"
+            class="close-button"
+            :style="{ ...closeButtonStyle, ...tip.closeButtonStyle }"
             @click.prevent="$emit('removeTip', tip.id)"
           >
             ×
@@ -35,16 +36,89 @@ defineProps({
     type: Array,
     default: () => [],
   },
+  containerStyle: {
+    type: Object,
+    default: () => ({}),
+  },
+  tipItemStyle: {
+    type: Object,
+    default: () => ({}),
+  },
+  tipContentStyle: {
+    type: Object,
+    default: () => ({}),
+  },
+  closeButtonStyle: {
+    type: Object,
+    default: () => ({}),
+  },
 })
 
 defineEmits(['removeTip'])
 </script>
 
 <style scoped>
-.flexCenter {
+.tips-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  max-height: 50vh;
+  width: 320px;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+  gap: 8px;
+  overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+  .tips-container {
+    width: calc(100vw - 40px);
+    right: 20px;
+  }
+}
+
+.tip-item {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8px);
+  padding: 12px 16px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.tip-content {
+  position: relative;
+  padding-right: 24px;
+}
+
+.tip-content p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.close-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: #666;
+  transition: color 0.2s ease;
+  width: 20px;
+  height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.close-button:hover {
+  color: #ef4444;
 }
 
 .tip-fade-enter-active,

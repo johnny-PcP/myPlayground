@@ -9,22 +9,15 @@ import ComprehensiveDemo from '../../../src/components/render-tips/examples/comp
 
 # 即時渲染提示訊息 <Badge type="info" text="composable" />
 
-Tips（提示訊息）是網頁中常見的用戶反饋機制，用於顯示操作結果、警告訊息或通知。這個組件參考了 render-dialog 的設計理念，通過 Composable 函式配合渲染函式實現動態提示訊息系統。
+動態渲染提示訊息的 Composable 函式，無需在模板中預先放置組件。
 
-## 元件簡介
+## 特色
 
-- 無需在模板中預先放置組件，將 Composable 引入即可使用。
-- 支援自動定時消失，可自定義持續時間。
-- 可選的 Teleport 功能，解決 z-index 層級衝突。
-- 支援多種樣式和顏色配置。
-- 提供手動關閉和批量清除功能。
-
-::: details 元件原始碼
-<<< ../../../src/components/render-tips/render-tips.vue
-:::
-::: details Composable 原始碼
-<<< ../../../src/components/render-tips/useRenderTips.ts
-:::
+- 無需在模板中預先放置組件
+- 支援自動定時消失
+- 支援自定義樣式配置
+- 提供手動關閉和批量清除功能
+- 自動管理容器生命週期
 
 ## 基礎範例
 
@@ -34,16 +27,20 @@ Tips（提示訊息）是網頁中常見的用戶反饋機制，用於顯示操�
 <<< ../../../src/components/render-tips/examples/basic-usage.vue
 :::
 
-## 元件參數
+## API 參考
 
 ### useRenderTips(options?)
 
-#### 參數
+#### 參數 (UseRenderTipsOptions)
 
-| 屬性 | 類型 | 預設值 | 說明 |
+| 參數 | 類型 | 預設值 | 說明 |
 |------|------|--------|------|
-| `teleport` | `boolean \| string` | `undefined` | 預設的 Teleport 設定，`true` 表示傳送到 body，字串表示自定義 CSS 選擇器 |
 | `defaultDuration` | `number` | `5000` | 預設持續時間（毫秒） |
+| `destroyDelay` | `number` | `300` | 容器銷毀延遲時間（毫秒） |
+| `containerStyle` | `Record<string, string \| number>` | `{}` | 容器樣式配置 |
+| `tipItemStyle` | `Record<string, string \| number>` | `{}` | 提示項目的預設樣式 |
+| `tipContentStyle` | `Record<string, string \| number>` | `{}` | 內容區域的預設樣式 |
+| `closeButtonStyle` | `Record<string, string \| number>` | `{}` | 關閉按鈕的預設樣式 |
 
 #### 返回值
 
@@ -54,16 +51,17 @@ Tips（提示訊息）是網頁中常見的用戶反饋機制，用於顯示操�
 | `removeAllTips` | `() => void` | 清除所有提示訊息 |
 | `tips` | `Tip[]` | 當前顯示的提示訊息陣列 |
 
-### 配置選項
-
-#### Tip 介面
+### Tip 介面
 
 | 屬性 | 類型 | 必填 | 說明 |
 |------|------|------|------|
 | `content` | `string` | ✓ | 提示訊息內容 |
-| `textColor` | `string` | - | 文字顏色 CSS 類別，如 `'text-red-700'` |
-| `duration` | `number` | - | 顯示持續時間（毫秒），覆蓋預設設定 |
-| `id` | `number` | - | 提示訊息唯一識別符，系統自動生成 |
+| `textColor` | `string` | - | 文字顏色，預設 `'#333333'` |
+| `duration` | `number` | - | 顯示持續時間（毫秒） |
+| `itemStyle` | `Record<string, string \| number>` | - | 提示項目的自定義樣式 |
+| `contentStyle` | `Record<string, string \| number>` | - | 內容區域的自定義樣式 |
+| `textStyle` | `Record<string, string \| number>` | - | 文字的自定義樣式 |
+| `closeButtonStyle` | `Record<string, string \| number>` | - | 關閉按鈕的自定義樣式 |
 
 ## 進階範例
 
@@ -73,58 +71,58 @@ Tips（提示訊息）是網頁中常見的用戶反饋機制，用於顯示操�
 <<< ../../../src/components/render-tips/examples/comprehensive-demo.vue
 :::
 
-## 使用技巧
+## 使用方式
 
-### 基本用法
+### 基本使用
 
 ```javascript
 import { useRenderTips } from '@/components/render-tips/useRenderTips'
 
 const tips = useRenderTips()
 
-// 顯示成功訊息
+// 顯示提示
 tips.pushTip({
   content: '操作成功！',
-  textColor: 'text-green-700',
-  duration: 3000
+  textColor: '#15803d',
+  duration: 3000,
+  itemStyle: {
+    backgroundColor: '#f0fdf4'
+  }
 })
 ```
 
-### 配置 Teleport
+### 自定義配置
 
 ```javascript
-// Teleport 到 body
-const _tips1 = useRenderTips({
-  teleport: true
+const tips = useRenderTips({
+  defaultDuration: 8000,
+  tipItemStyle: {
+    borderRadius: '12px',
+    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
+  }
 })
 
-// Teleport 到自定義元素
-const _tips2 = useRenderTips({
-  teleport: '#tips-container'
+// 自定義樣式提示
+tips.pushTip({
+  content: '具有漸層背景的提示',
+  itemStyle: {
+    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+    color: 'white'
+  }
 })
 ```
-
-### 自定義預設持續時間
-
-```javascript
-const _tips3 = useRenderTips({
-  defaultDuration: 8000 // 8秒後自動消失
-})
-```
-
-## 與原版本的差異
-
-| 項目 | 原版本 | 新版本 |
-|------|--------|--------|
-| 使用方式 | 需要在 App.vue 中放置組件 | 只需引入 Composable |
-| 狀態管理 | 使用 nanostores | 使用 Vue 響應式系統 |
-| 渲染方式 | 模板渲染 | 動態渲染函式 |
-| Teleport | 不支援 | 完整支援 |
-| 記憶體管理 | 手動管理 | 自動清理 |
 
 ## 注意事項
 
-- 如果指定了不存在的 Teleport 目標，會拋出錯誤
-- 系統會自動為每個提示訊息生成唯一 ID
-- 當所有提示訊息都被移除時，容器會自動銷毀
-- 支援同時顯示多個不同類型的提示訊息
+- 無需在模板中預先放置組件，系統會自動管理容器
+- 支援同時顯示多個提示訊息
+- 樣式配置會與預設樣式合併
+- 預設圓角 4px，可透過 `borderRadius` 自定義
+
+::: details 查看原始碼
+<<< ../../../src/components/render-tips/render-tips.vue
+:::
+
+::: details 查看 Composable 原始碼
+<<< ../../../src/components/render-tips/useRenderTips.ts
+:::

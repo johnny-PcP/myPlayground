@@ -1,83 +1,65 @@
-import { h, ref, render, Teleport, watchEffect } from 'vue'
+import { h, ref, render, watchEffect } from 'vue'
 import TipsComponent from './render-tips.vue'
 
 export interface Tip {
   id?: number;
   content: string;
-  textColor?: string;
+  textColor?: string; // CSS 顏色值，如 '#ff0000', 'red', 'rgb(255, 0, 0)'，預設為 '#333333'
   duration?: number; // 持續時間，單位毫秒，默認 5000ms
+  // 樣式配置
+  itemStyle?: Record<string, string | number>; // tip-item 的自定義樣式
+  contentStyle?: Record<string, string | number>; // tip-content 的自定義樣式
+  textStyle?: Record<string, string | number>; // 文字的自定義樣式
+  closeButtonStyle?: Record<string, string | number>; // 關閉按鈕的自定義樣式
 }
 
 export interface UseRenderTipsOptions {
-  /** 預設的 Teleport 設定，true 表示傳送到 body，string 表示自定義 CSS 選擇器 */
-  teleport?: boolean | string;
   /** 預設持續時間，單位毫秒 */
   defaultDuration?: number;
+  /** 容器銷毀延遲時間，單位毫秒 */
+  destroyDelay?: number;
+  /** 容器樣式配置 */
+  containerStyle?: Record<string, string | number>;
+  /** tip-item 的預設樣式 */
+  tipItemStyle?: Record<string, string | number>;
+  /** tip-content 的預設樣式 */
+  tipContentStyle?: Record<string, string | number>;
+  /** 關閉按鈕的預設樣式 */
+  closeButtonStyle?: Record<string, string | number>;
 }
 
+// 全域容器管理
+let globalContainer: HTMLElement | null = null
+let globalStopWatcher: (() => void) | null = null
+let globalDestroyTimer: NodeJS.Timeout | null = null
+const globalTips = ref<Tip[]>([])
+
 export function useRenderTips(options: UseRenderTipsOptions = {}) {
-  let container: HTMLElement | null = null
-  let stopWatcher: (() => void) | null = null
-  const tips = ref<Tip[]>([])
   const timers = new Map<number, NodeJS.Timeout>()
 
-  function checkPortalContainer(target: string): HTMLElement {
-    // 如果是 body，直接返回
-    if (target === 'body') {
-      return document.body
-    }
-
-    // 嘗試找到指定的元素，找不到就拋出錯誤
-    const existing = document.querySelector(target) as HTMLElement
-    if (existing) {
-      return existing
-    }
-
-    // 找不到就拋出錯誤，讓用戶知道
-    throw new Error(`Teleport target "${target}" not found`)
-  }
-
-  function createContainer() {
-    if (container)
+  function ensureContainer() {
+    if (globalContainer) {
       return
+    }
 
-    container = document.createElement('div')
-    const containerId = `tips-container-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
-    container.id = containerId
-    document.body.appendChild(container)
+    globalContainer = document.createElement('div')
+    document.body.appendChild(globalContainer)
 
     // 使用 watchEffect 監聽 tips 變化並重新渲染
-    stopWatcher = watchEffect(() => {
-      if (!container)
+    globalStopWatcher = watchEffect(() => {
+      if (!globalContainer)
         return
 
-      const teleportTarget = options.teleport
-      let vNode
+      const vNode = h(TipsComponent, {
+        tips: globalTips.value,
+        containerStyle: options.containerStyle || {},
+        tipItemStyle: { borderRadius: '4px', ...options.tipItemStyle },
+        tipContentStyle: options.tipContentStyle || {},
+        closeButtonStyle: options.closeButtonStyle || {},
+        onRemoveTip: removeTip,
+      })
 
-      if (teleportTarget) {
-        // 確定傳送目標
-        const target = teleportTarget === true ? 'body' : teleportTarget as string
-        const portalElement = target === 'body' ? document.body : checkPortalContainer(target)
-
-        // 使用 Teleport 包裝組件
-        vNode = h(Teleport, {
-          to: portalElement,
-        }, [
-          h(TipsComponent, {
-            tips: tips.value,
-            onRemoveTip: removeTip,
-          }),
-        ])
-      }
-      else {
-        // 不使用 Teleport，直接渲染
-        vNode = h(TipsComponent, {
-          tips: tips.value,
-          onRemoveTip: removeTip,
-        })
-      }
-
-      render(vNode, container)
+      render(vNode, globalContainer)
     })
   }
 
@@ -86,11 +68,15 @@ export function useRenderTips(options: UseRenderTipsOptions = {}) {
     const duration = tip.duration ?? options.defaultDuration ?? 5000
 
     const newTip = { id: thisId, ...tip }
-    tips.value.push(newTip)
+    globalTips.value.push(newTip)
 
-    // 如果還沒有容器，創建一個
-    if (!container) {
-      createContainer()
+    // 確保容器存在
+    ensureContainer()
+
+    // 取消之前的銷毀計時器
+    if (globalDestroyTimer) {
+      clearTimeout(globalDestroyTimer)
+      globalDestroyTimer = null
     }
 
     // 設置自動移除計時器
@@ -102,9 +88,9 @@ export function useRenderTips(options: UseRenderTipsOptions = {}) {
   }
 
   function removeTip(id: number) {
-    const index = tips.value.findIndex((tip) => tip.id === id)
+    const index = globalTips.value.findIndex((tip) => tip.id === id)
     if (index !== -1) {
-      tips.value.splice(index, 1)
+      globalTips.value.splice(index, 1)
 
       // 清除對應的計時器
       const timer = timers.get(id)
@@ -113,9 +99,9 @@ export function useRenderTips(options: UseRenderTipsOptions = {}) {
         timers.delete(id)
       }
 
-      // 如果沒有 tip 了，銷毀容器
-      if (tips.value.length === 0) {
-        destroy()
+      // 如果沒有 tip 了，延遲銷毀容器等待動畫完成
+      if (globalTips.value.length === 0) {
+        scheduleDestroy()
       }
     }
   }
@@ -125,20 +111,38 @@ export function useRenderTips(options: UseRenderTipsOptions = {}) {
     timers.forEach((timer) => clearTimeout(timer))
     timers.clear()
 
-    tips.value = []
-    destroy()
+    globalTips.value = []
+    scheduleDestroy()
+  }
+
+  function scheduleDestroy() {
+    // 取消之前的銷毀計時器
+    if (globalDestroyTimer) {
+      clearTimeout(globalDestroyTimer)
+    }
+
+    // 延遲銷毀，等待動畫完成
+    const delay = options.destroyDelay ?? 300
+    globalDestroyTimer = setTimeout(() => {
+      destroy()
+    }, delay)
   }
 
   function destroy() {
-    if (stopWatcher) {
-      stopWatcher()
-      stopWatcher = null
+    if (globalDestroyTimer) {
+      clearTimeout(globalDestroyTimer)
+      globalDestroyTimer = null
     }
 
-    if (container) {
-      render(null, container)
-      document.body.removeChild(container)
-      container = null
+    if (globalStopWatcher) {
+      globalStopWatcher()
+      globalStopWatcher = null
+    }
+
+    if (globalContainer) {
+      render(null, globalContainer)
+      document.body.removeChild(globalContainer)
+      globalContainer = null
     }
   }
 
@@ -146,6 +150,6 @@ export function useRenderTips(options: UseRenderTipsOptions = {}) {
     pushTip,
     removeTip,
     removeAllTips,
-    tips: tips.value, // 返回響應式引用，供外部訪問
+    tips: globalTips.value,
   }
 }

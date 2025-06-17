@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import { expect } from 'vitest'
+import { expect, it } from 'vitest'
 
 import BtnNaughty from './btn-naughty.vue'
 

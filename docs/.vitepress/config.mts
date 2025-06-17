@@ -46,7 +46,7 @@ export default withMermaid(
       nav: [
         { text: '首頁', link: '/' },
         { text: '關於本站', link: '/about' },
-        { text: '元件列表', link: '/components/' },
+        { text: '元件列表', link: '/components' },
       ],
       sidebar: [
         {
@@ -55,10 +55,11 @@ export default withMermaid(
         },
         {
           text: '元件列表',
-          link: '/components/',
+          link: '/components',
           items: [
             { text: '巢狀模糊搜尋器', link: '/inspiration/nested-fuzzy-search/' },
             { text: '即時渲染通知', link: '/inspiration/render-dialog/' },
+            { text: '可連續堆疊提示', link: '/inspiration/render-tips/' },
           ],
         },
         // {

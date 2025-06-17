@@ -1,112 +1,158 @@
 <template>
-  <div class="comprehensive-demo">
+  <div class="flex flex-col gap-4 w-full border border-gray-300 p-6">
     <div class="demo-buttons">
       <button class="demo-btn" @click="showCustomDuration">
         自定義持續時間（10秒）
       </button>
 
-      <button class="demo-btn teleport-btn" @click="showTeleportTips">
-        Teleport 到 body
+      <button class="demo-btn" @click="showStyledTips">
+        自定義樣式提示
       </button>
 
       <button class="demo-btn" @click="showMultipleTips">
         一次顯示多個提示
       </button>
 
-      <button class="demo-btn auto-btn" @click="startAutoTips">
-        自動生成提示（每2秒）
+      <button class="demo-btn" @click="showRoundedTips">
+        不同圓角設計
       </button>
 
-      <button class="demo-btn stop-btn" @click="stopAutoTips">
-        停止自動生成
+      <button class="demo-btn clear-btn" @click="clearAllTips">
+        清除所有提示
       </button>
     </div>
 
-    <div class="teleport-info">
-      <h4>🚀 Teleport 功能說明</h4>
-      <p>與 render-dialog 類似，render-tips 也支援 Teleport 功能：</p>
+    <div class="info-section">
+      <div>
+        🎨 樣式配置功能說明
+      </div>
+      <p>render-tips 提供了靈活的樣式配置選項：</p>
       <ul>
-        <li><code>teleport: true</code> - 傳送到 document.body</li>
-        <li><code>teleport: "#tips-container"</code> - 傳送到指定元素</li>
-        <li>可以有效避免 z-index 層級衝突</li>
+        <li><code>itemStyle</code> - 自定義提示框外觀（包含圓角設計）</li>
+        <li><code>contentStyle</code> - 自定義內容區域樣式</li>
+        <li><code>textStyle</code> - 自定義文字樣式</li>
+        <li><code>closeButtonStyle</code> - 自定義關閉按鈕樣式</li>
+        <li>預設提供 4px 輕微圓角，可透過 borderRadius 自定義</li>
+        <li>支援容器銷毀延遲，確保動畫效果完整</li>
       </ul>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
 import { useRenderTips } from '../useRenderTips'
 
 // 普通的 tips 實例
-const normalTips = useRenderTips()
-
-// 帶 teleport 的 tips 實例
-const teleportTips = useRenderTips({
-  teleport: true,
+const tips = useRenderTips({
   defaultDuration: 4000,
+  destroyDelay: 400, // 延遲銷毀時間
 })
 
-const autoInterval = ref(null)
-
 function showCustomDuration() {
-  normalTips.pushTip({
+  tips.pushTip({
     content: '這個提示會顯示 10 秒鐘，比一般提示更久',
-    textColor: 'text-blue-700',
+    textColor: '#1d4ed8', // blue-700
     duration: 10000,
   })
 }
 
-function showTeleportTips() {
-  teleportTips.pushTip({
-    content: '🚀 這個提示使用 Teleport 傳送到 body',
-    textColor: 'text-purple-700',
+function showStyledTips() {
+  tips.pushTip({
+    content: '這是一個具有自定義樣式的提示訊息',
+    textColor: '#7c3aed', // purple-700
     duration: 5000,
+    itemStyle: {
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      color: 'white',
+      borderRadius: '12px',
+      transform: 'scale(1.02)',
+    },
+    contentStyle: {
+      padding: '16px 24px',
+    },
+    textStyle: {
+      fontSize: '16px',
+      fontWeight: 'bold',
+      color: 'white',
+    },
+    closeButtonStyle: {
+      color: 'white',
+      fontSize: '20px',
+    },
   })
 }
 
 function showMultipleTips() {
   const messages = [
-    { content: '第一個提示訊息', textColor: 'text-green-700' },
-    { content: '第二個提示訊息', textColor: 'text-blue-700' },
-    { content: '第三個提示訊息', textColor: 'text-purple-700' },
+    {
+      content: '第一個提示訊息',
+      textColor: '#15803d',
+      itemStyle: { backgroundColor: '#f0fdf4' },
+    },
+    {
+      content: '第二個提示訊息',
+      textColor: '#1d4ed8',
+      itemStyle: { backgroundColor: '#eff6ff' },
+    },
+    {
+      content: '第三個提示訊息',
+      textColor: '#7c3aed',
+      itemStyle: { backgroundColor: '#faf5ff' },
+    },
   ]
 
   messages.forEach((msg, index) => {
     setTimeout(() => {
-      normalTips.pushTip(msg)
+      tips.pushTip(msg)
     }, index * 500) // 每 500ms 顯示一個
   })
 }
 
-function startAutoTips() {
-  if (autoInterval.value)
-    return
+function showRoundedTips() {
+  // 無圓角設計
+  tips.pushTip({
+    content: '無圓角設計 (borderRadius: 0)',
+    textColor: '#475569',
+    duration: 5000,
+    itemStyle: {
+      backgroundColor: '#f8fafc',
+      borderRadius: '0',
+    },
+  })
 
-  let count = 1
-  autoInterval.value = setInterval(() => {
-    normalTips.pushTip({
-      content: `自動生成的提示 #${count}`,
-      textColor: count % 2 === 0 ? 'text-indigo-700' : 'text-emerald-700',
-      duration: 3000,
+  // 中等圓角設計
+  setTimeout(() => {
+    tips.pushTip({
+      content: '中等圓角設計 (borderRadius: 8px)',
+      textColor: '#0369a1',
+      duration: 5000,
+      itemStyle: {
+        backgroundColor: '#e0f2fe',
+        borderRadius: '8px',
+      },
     })
-    count++
-  }, 2000)
+  }, 500)
+
+  // 大圓角設計
+  setTimeout(() => {
+    tips.pushTip({
+      content: '大圓角設計 (borderRadius: 16px)',
+      textColor: '#c2410c',
+      duration: 5000,
+      itemStyle: {
+        backgroundColor: '#fff7ed',
+        borderRadius: '16px',
+      },
+    })
+  }, 1000)
 }
 
-function stopAutoTips() {
-  if (autoInterval.value) {
-    clearInterval(autoInterval.value)
-    autoInterval.value = null
-  }
+function clearAllTips() {
+  tips.removeAllTips()
 }
 </script>
 
 <style scoped>
-.comprehensive-demo {
-  margin-bottom: 32px;
-}
-
 .demo-buttons {
   display: flex;
   gap: 12px;
@@ -135,55 +181,35 @@ function stopAutoTips() {
   transform: translateY(0);
 }
 
-.teleport-btn {
-  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%) !important;
+.clear-btn {
+  background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%) !important;
 }
 
-.auto-btn {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
-}
-
-.stop-btn {
-  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
-}
-
-.teleport-info {
-  background: #f8fafc;
+.info-section {
   border: 1px solid #e2e8f0;
   border-radius: 8px;
   padding: 20px;
   margin-top: 24px;
 }
 
-.teleport-info h4 {
-  color: #2d3748;
-  margin-bottom: 12px;
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.teleport-info p {
-  color: #666;
+.info-section p {
   line-height: 1.6;
   margin-bottom: 12px;
 }
 
-.teleport-info ul {
+.info-section ul {
   margin: 0;
   padding-left: 20px;
 }
 
-.teleport-info li {
-  color: #666;
+.info-section li {
   line-height: 1.6;
   margin-bottom: 8px;
 }
 
-.teleport-info code {
-  background: #e2e8f0;
+.info-section code {
   padding: 2px 6px;
   border-radius: 4px;
   font-size: 13px;
-  color: #2d3748;
 }
 </style>

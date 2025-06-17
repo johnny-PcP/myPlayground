@@ -1,6 +1,7 @@
 <script setup>
 import NestedFuzzySearch from '../src/components/nested-fuzzy-search/examples/basic-usage.vue'
 import RenderDialog from '../src/components/render-dialog/examples/basic-usage.vue'
+import RenderTips from '../src/components/render-tips/examples/basic-usage.vue'
 </script>
 # 元件列表
 
@@ -9,3 +10,6 @@ import RenderDialog from '../src/components/render-dialog/examples/basic-usage.v
 
 ## 即時渲染通知
 <RenderDialog title="basic-usage"/>
+
+## 可連續堆疊提示
+<RenderTips title="basic-usage"/>
