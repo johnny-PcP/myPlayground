@@ -19,15 +19,18 @@ Dialog是網頁很常見的需求，常出現在用戶有重要決策時使用�
 - 下面是元件渲染的簡易原理：
 
 **開啟**
+
 ```mermaid
 graph LR
-    A[ open() ] --> B[創建 DOM 容器<br/>• 使用 createElement 創建容器 <br/>• 將容器掛載至 body<br/> &nbsp;] --> C[創建並渲染對話框<br/>• 使用 render 函式創建組件<br/>• 將組件渲染到容器上<br/> &nbsp;] --> D[顯示對話框]
+    A[open函式] --> B[• 創建容器<br/>• 將容器掛載至 body<br/> &nbsp] --> C[• 使用 render 函式創建組件<br/>• 將組件掛在容器上<br/> &nbsp] --> D[顯示對話框]
+
 ```
 
 **關閉流程**
 ```mermaid
 graph LR
-    E[ close() ] --> F[清理資源<br/>• 移除 DOM 元素<br/>• 清理 Vue 實例<br/> &nbsp;] --> G[關閉對話框]
+    E[close函式] --> F[• 移除 DOM 元素<br/>• 清理 Vue 實例<br/> &nbsp] --> G[關閉對話框]
+
 ```
 
 ::: details 元件原始碼
