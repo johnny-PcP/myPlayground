@@ -6,15 +6,15 @@
       </button>
 
       <button class="demo-btn" @click="showStyledTips">
-        自定義樣式提示
+        顏色主題提示
       </button>
 
       <button class="demo-btn" @click="showMultipleTips">
         一次顯示多個提示
       </button>
 
-      <button class="demo-btn" @click="showRoundedTips">
-        不同圓角設計
+      <button class="demo-btn" @click="showColorThemes">
+        不同顏色主題
       </button>
 
       <button class="demo-btn clear-btn" @click="clearAllTips">
@@ -24,16 +24,16 @@
 
     <div class="info-section">
       <div>
-        🎨 樣式配置功能說明
+        🎨 簡化後的樣式配置
       </div>
-      <p>render-tips 提供了靈活的樣式配置選項：</p>
+      <p>render-tips 現在提供簡化的顏色配置選項：</p>
       <ul>
-        <li><code>itemStyle</code> - 自定義提示框外觀（包含圓角設計）</li>
-        <li><code>contentStyle</code> - 自定義內容區域樣式</li>
-        <li><code>textStyle</code> - 自定義文字樣式</li>
-        <li><code>closeButtonStyle</code> - 自定義關閉按鈕樣式</li>
-        <li>預設提供 4px 輕微圓角，可透過 borderRadius 自定義</li>
-        <li>支援容器銷毀延遲，確保動畫效果完整</li>
+        <li><code>textColor</code> - 自定義文字顏色</li>
+        <li><code>backgroundColor</code> - 自定義背景顏色</li>
+        <li><code>borderColor</code> - 自定義邊框顏色（可選）</li>
+        <li><code>position</code> - 容器位置（top-left, top-right, bottom-left, bottom-right）</li>
+        <li>基本樣式（圓角、文字大小、陰影等）已固定在組件中</li>
+        <li>只保留可能因提示類型而不同的顏色相關配置</li>
       </ul>
     </div>
   </div>
@@ -45,40 +45,25 @@ import { useRenderTips } from '../useRenderTips'
 // 普通的 tips 實例
 const tips = useRenderTips({
   defaultDuration: 4000,
-  destroyDelay: 400, // 延遲銷毀時間
+  position: 'bottom-right',
 })
 
 function showCustomDuration() {
   tips.pushTip({
     content: '這個提示會顯示 10 秒鐘，比一般提示更久',
-    textColor: '#1d4ed8', // blue-700
+    textColor: '#1d4ed8',
+    backgroundColor: '#eff6ff',
     duration: 10000,
   })
 }
 
 function showStyledTips() {
   tips.pushTip({
-    content: '這是一個具有自定義樣式的提示訊息',
-    textColor: '#7c3aed', // purple-700
+    content: '這是一個具有紫色主題的提示訊息',
+    textColor: '#ffffff',
+    backgroundColor: '#7c3aed',
+    borderColor: '#5b21b6',
     duration: 5000,
-    itemStyle: {
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      color: 'white',
-      borderRadius: '12px',
-      transform: 'scale(1.02)',
-    },
-    contentStyle: {
-      padding: '16px 24px',
-    },
-    textStyle: {
-      fontSize: '16px',
-      fontWeight: 'bold',
-      color: 'white',
-    },
-    closeButtonStyle: {
-      color: 'white',
-      fontSize: '20px',
-    },
   })
 }
 
@@ -87,17 +72,17 @@ function showMultipleTips() {
     {
       content: '第一個提示訊息',
       textColor: '#15803d',
-      itemStyle: { backgroundColor: '#f0fdf4' },
+      backgroundColor: '#f0fdf4',
     },
     {
       content: '第二個提示訊息',
       textColor: '#1d4ed8',
-      itemStyle: { backgroundColor: '#eff6ff' },
+      backgroundColor: '#eff6ff',
     },
     {
       content: '第三個提示訊息',
       textColor: '#7c3aed',
-      itemStyle: { backgroundColor: '#faf5ff' },
+      backgroundColor: '#faf5ff',
     },
   ]
 
@@ -108,41 +93,30 @@ function showMultipleTips() {
   })
 }
 
-function showRoundedTips() {
-  // 無圓角設計
+function showColorThemes() {
+  // 顯示不同顏色主題的提示
   tips.pushTip({
-    content: '無圓角設計 (borderRadius: 0)',
+    content: '灰色主題提示訊息',
     textColor: '#475569',
+    backgroundColor: '#f8fafc',
     duration: 5000,
-    itemStyle: {
-      backgroundColor: '#f8fafc',
-      borderRadius: '0',
-    },
   })
 
-  // 中等圓角設計
   setTimeout(() => {
     tips.pushTip({
-      content: '中等圓角設計 (borderRadius: 8px)',
+      content: '藍色主題提示訊息',
       textColor: '#0369a1',
+      backgroundColor: '#e0f2fe',
       duration: 5000,
-      itemStyle: {
-        backgroundColor: '#e0f2fe',
-        borderRadius: '8px',
-      },
     })
   }, 500)
 
-  // 大圓角設計
   setTimeout(() => {
     tips.pushTip({
-      content: '大圓角設計 (borderRadius: 16px)',
+      content: '橙色主題提示訊息',
       textColor: '#c2410c',
+      backgroundColor: '#fff7ed',
       duration: 5000,
-      itemStyle: {
-        backgroundColor: '#fff7ed',
-        borderRadius: '16px',
-      },
     })
   }, 1000)
 }
